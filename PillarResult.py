@@ -1,47 +1,47 @@
 # заготовка под dataclass
 class PillarResult:
     def __init__(self,
-                 Wcab,
-                 WgolNorm,
-                 Wgolol_1,
-                 Wgolol_2,
-                 WTGol,
-                 Wgol_1,
-                 Wgol_2,
-                 KlLeft,
-                 KlRight,
+                 wCab,
+                 wGolNorm,
+                 wGolol_1,
+                 wGolol_2,
+                 wTGol,
+                 wgol_1,
+                 wgol_2,
+                 klLeft,
+                 klRight,
                  angkoef,
-                 WGN_L,
-                 WGN_R,
-                 WG1_L,
-                 WG2_L,
-                 WG1_R,
-                 WG2_R,
-                 Wmax_1,
-                 WmaxR_1,
-                 Cx,
-                 WLNormL,
-                 WLNormR,
-                 WL_1,
-                 WR_1,
-                 WL_2,
-                 WR_2,
-                 WvetR_1,
-                 Wvet_1,
-                 WcabLeft,
-                 WcabRight,
+                 wGN_L,
+                 wGN_R,
+                 wG1_L,
+                 wG2_L,
+                 wG1_R,
+                 wG2_R,
+                 wmax_1,
+                 wmaxR_1,
+                 cx,
+                 wLNormL,
+                 wLNormR,
+                 wL_1,
+                 wR_1,
+                 wL_2,
+                 wR_2,
+                 wvetR_1,
+                 wvet_1,
+                 wCabLeft,
+                 wCabRight,
                  line_max1_left,
                  line_max1_right,
                  line_vet1_left,
                  line_vet1_right,
                  line_gol1_left,
                  line_gol1_right,
-                 Ki,
-                 Kd,
-                 Cg,
-                 Kf,
+                 ki,
+                 kd,
+                 cg,
+                 kf,
                  av,
-                 Kw,
+                 kw,
                  vd,
                  avg,
                  t1_2L,
@@ -73,47 +73,47 @@ class PillarResult:
                  vet,
                  gol,
                  land):
-        self.Wcab = Wcab
-        self.WgolNorm = WgolNorm
-        self.Wgolol_1 = Wgolol_1
-        self.Wgolol_2 = Wgolol_2
-        self.WTGol = WTGol
-        self.Wgol_1 = Wgol_1
-        self.Wgol_2 = Wgol_2
-        self.KlLeft = KlLeft
-        self.KlRight = KlRight
+        self.wCab = wCab
+        self.wGolNorm = wGolNorm
+        self.wGolol_1 = wGolol_1
+        self.wGolol_2 = wGolol_2
+        self.wTGol = wTGol
+        self.wgol_1 = wgol_1
+        self.wgol_2 = wgol_2
+        self.klLeft = klLeft
+        self.klRight = klRight
         self.angkoef = angkoef
-        self.WGN_L = WGN_L
-        self.WGN_R = WGN_R
-        self.WG1_L = WG1_L
-        self.WG2_L = WG2_L
-        self.WG1_R = WG1_R
-        self.WG2_R = WG2_R
-        self.Wmax_1 = Wmax_1
-        self.WmaxR_1 = WmaxR_1
-        self.Cx = Cx
-        self.WLNormL = WLNormL
-        self.WLNormR = WLNormR
-        self.WL_1 = WL_1
-        self.WR_1 = WR_1
-        self.WL_2 = WL_2
-        self.WR_2 = WR_2
-        self.WvetR_1 = WvetR_1
-        self.Wvet_1 = Wvet_1
-        self.WcabLeft = WcabLeft
-        self.WcabRight = WcabRight
+        self.wGN_L = wGN_L
+        self.wGN_R = wGN_R
+        self.wG1_L = wG1_L
+        self.wG2_L = wG2_L
+        self.wG1_R = wG1_R
+        self.wG2_R = wG2_R
+        self.wmax_1 = wmax_1
+        self.wmaxR_1 = wmaxR_1
+        self.cx = cx
+        self.wLNormL = wLNormL
+        self.wLNormR = wLNormR
+        self.wL_1 = wL_1
+        self.wR_1 = wR_1
+        self.wL_2 = wL_2
+        self.wR_2 = wR_2
+        self.wvetR_1 = wvetR_1
+        self.wvet_1 = wvet_1
+        self.wCabLeft = wCabLeft
+        self.wCabRight = wCabRight
         self.line_max1_left = line_max1_left
         self.line_max1_right = line_max1_right
         self.line_vet1_left = line_vet1_left
         self.line_vet1_right = line_vet1_right
         self.line_gol1_left = line_gol1_left
         self.line_gol1_right = line_gol1_right
-        self.Ki = Ki
-        self.Kd = Kd
-        self.Cg = Cg
-        self.Kf = Kf
+        self.ki = ki
+        self.kd = kd
+        self.cg = cg
+        self.kf = kf
         self.av = av
-        self.Kw = Kw
+        self.kw = kw
         self.vd = vd
         self.avg = avg
         self.t1_2L = t1_2L
@@ -161,25 +161,25 @@ class PillarResult:
         pill_key[0] = "#G1_1"
         pill_key_r[0] = str(self.g1_1)
         pill_key[1] = "#right_Self"
-        pill_key_r[1] = str(self.WcabLeft)
+        pill_key_r[1] = str(self.wCabLeft)
         pill_key[2] = "#left_Self"
-        pill_key_r[2] = str(self.WcabRight)
+        pill_key_r[2] = str(self.wCabRight)
         pill_key[3] = "#Ki"
-        pill_key_r[3] = str(self.Ki)
+        pill_key_r[3] = str(self.ki)
         pill_key[4] = "#Kd"
-        pill_key_r[4] = str(self.Kd)
+        pill_key_r[4] = str(self.kd)
         pill_key[5] = "#cg"
-        pill_key_r[5] = str(self.Cg)  # проверить!!!
+        pill_key_r[5] = str(self.cg)  # проверить!!!
         pill_key[6] = "#diam"
         pill_key_r[6] = str(self.diam)
         pill_key[7] = "#gol_Norm"
-        pill_key_r[7] = str(self.WgolNorm)
+        pill_key_r[7] = str(self.wGolNorm)
         pill_key[8] = "#Kf"
-        pill_key_r[8] = str(self.Kf)
+        pill_key_r[8] = str(self.kf)
         pill_key[9] = "#gol_1"
-        pill_key_r[9] = str(self.Wgolol_1)
+        pill_key_r[9] = str(self.wGolol_1)
         pill_key[10] = "#gol_2"
-        pill_key_r[10] = str(self.Wgolol_2)
+        pill_key_r[10] = str(self.wGolol_2)
         pill_key[11] = "#len_Left"
         pill_key_r[11] = str(self.len_left)
         pill_key[12] = "#len_Right"
@@ -191,27 +191,27 @@ class PillarResult:
         pill_key[15] = "#av"
         pill_key_r[15] = str(self.av)
         pill_key[16] = "#KlR"
-        pill_key_r[16] = str(self.KlRight)
+        pill_key_r[16] = str(self.klRight)
         pill_key[17] = "#Kw"
-        pill_key_r[17] = str(self.Kw)
+        pill_key_r[17] = str(self.kw)
         pill_key[18] = "#Cx"
-        pill_key_r[18] = str(self.Cx)
+        pill_key_r[18] = str(self.cx)
         pill_key[19] = "#vd"
         pill_key_r[19] = str(self.vd)
         pill_key[20] = "#Kl"
-        pill_key_r[20] = str(self.KlLeft)
+        pill_key_r[20] = str(self.klLeft)
         pill_key[21] = "#vet_right_Norm"
-        pill_key_r[21] = str(self.WLNormR)
+        pill_key_r[21] = str(self.wLNormR)
         pill_key[22] = "#vet_left_Norm"
-        pill_key_r[22] = str(self.WLNormL)
+        pill_key_r[22] = str(self.wLNormL)
         pill_key[23] = "#vet_right_1"
-        pill_key_r[23] = str(self.WR_1)
+        pill_key_r[23] = str(self.wR_1)
         pill_key[24] = "#vet_left_1"
-        pill_key_r[24] = str(self.WL_1)
+        pill_key_r[24] = str(self.wL_1)
         pill_key[25] = "#vet_right_2"
-        pill_key_r[25] = str(self.WR_2)
+        pill_key_r[25] = str(self.wR_2)
         pill_key[26] = "#vet_left_2"
-        pill_key_r[26] = str(self.WL_2)
+        pill_key_r[26] = str(self.wL_2)
         pill_key[27] = "#P1_1"
         pill_key_r[27] = str(self.p1_1)
         pill_key[28] = "#P2_1"
@@ -219,17 +219,17 @@ class PillarResult:
         pill_key[29] = "#agol"
         pill_key_r[29] = str(self.avg)
         pill_key[30] = "#vetgol_right_Norm"
-        pill_key_r[30] = str(self.WGN_R)
+        pill_key_r[30] = str(self.wGN_R)
         pill_key[31] = "#vetgol_left_Norm"
-        pill_key_r[31] = str(self.WGN_L)
+        pill_key_r[31] = str(self.wGN_L)
         pill_key[32] = "#vetgol_right_1"
-        pill_key_r[32] = str(self.WG1_R)
+        pill_key_r[32] = str(self.wG1_R)
         pill_key[33] = "#vetgol_left_1"
-        pill_key_r[33] = str(self.WG1_L)
+        pill_key_r[33] = str(self.wG1_L)
         pill_key[34] = "#vetgol_right_2"
-        pill_key_r[34] = str(self.WG2_R)
+        pill_key_r[34] = str(self.wG2_R)
         pill_key[35] = "#vetgol_left_2"
-        pill_key_r[35] = str(self.WG2_L)
+        pill_key_r[35] = str(self.wG2_L)
         pill_key[36] = "#P1_2"
         pill_key_r[36] = str(self.p1_2)
         pill_key[37] = "#P2_2"
@@ -247,7 +247,7 @@ class PillarResult:
         pill_key[43] = "#tklr"
         pill_key_r[43] = str(self.tklr * 1000000)
         pill_key[44] = "#cabWeight"
-        pill_key_r[44] = str(self.Wcab)
+        pill_key_r[44] = str(self.wCab)
         pill_key[45] = "#startH_left"
         pill_key_r[45] = str(self.line_max1_left[5])
         pill_key[46] = "#startH_right"
@@ -267,9 +267,9 @@ class PillarResult:
         pill_key[53] = "#Tem_length_right"
         pill_key_r[53] = str(self.line_max1_right[8])
         pill_key[54] = "#nagrVet_left"
-        pill_key_r[54] = str(self.Wvet_1)
+        pill_key_r[54] = str(self.wvet_1)
         pill_key[55] = "#nagrVet_right"
-        pill_key_r[55] = str(self.WvetR_1)
+        pill_key_r[55] = str(self.wvetR_1)
         pill_key[56] = "#a1_left"
         pill_key_r[56] = str(self.line_vet1_left[2])
         pill_key[57] = "#b1_left"
@@ -295,9 +295,9 @@ class PillarResult:
         pill_key[67] = "#T1_1_right"
         pill_key_r[67] = str(self.t1_1R)
         pill_key[68] = "#nagrVetGol_left"
-        pill_key_r[68] = str(self.Wmax_1)
+        pill_key_r[68] = str(self.wmax_1)
         pill_key[69] = "#nagrVetGol_right"
-        pill_key_r[69] = str(self.WmaxR_1)
+        pill_key_r[69] = str(self.wmaxR_1)
         pill_key[70] = "#a2_left"
         pill_key_r[70] = str(self.line_max1_left[2])
         pill_key[71] = "#b2_left"
