@@ -27,34 +27,34 @@ class Calculator:
         if self.height <= 15.0:  # 15
             self.ki = 1.0
             hI = [1.0, 0.65, 0.4]
-        if 15.01 <= self.height <= 30.0:  # 20
+        if 15.0 < self.height <= 30.0:  # 20
             self.ki = 1.0
             hI = [1.25, 0.85, 0.55]
-        if 30.01 <= self.height <= 50.0:  # 40
+        if 30.0 < self.height <= 50.0:  # 40
             self.ki = 1.4
             hI = [1.5, 1.1, 0.8]
-        if 50.01 <= self.height <= 70.0:  # 60
+        if 50.0 < self.height <= 70.0:  # 60
             self.ki = 1.6
             hI = [1.7, 1.3, 1.0]
-        if 70.01 <= self.height <= 90.0:  # 80
+        if 70.0 < self.height <= 90.0:  # 80
             self.ki = 1.8
             hI = [1.85, 1.45, 1.15]
-        if 90.01 <= self.height <= 125.0:  # 100
+        if 90.0 < self.height <= 125.0:  # 100
             self.ki = 2.0
             hI = [2.0, 1.6, 1.25]
-        if 125.01 <= self.height <= 175.0:  # 150
+        if 125.0 < self.height <= 175.0:  # 150
             self.ki = 2.0
             hI = [2.25, 1.9, 1.55]
-        if 175.01 <= self.height <= 225.0:  # 200
+        if 175.0 < self.height <= 225.0:  # 200
             self.ki = 2.0
             hI = [2.45, 2.1, 1.8]
-        if 225.01 <= self.height <= 275.0:  # 250
+        if 225.0 < self.height <= 275.0:  # 250
             self.ki = 2.0
             hI = [2.65, 2.3, 2.0]
-        if 275.01 <= self.height <= 350.0:  # 300
+        if 275.0 < self.height <= 350.0:  # 300
             self.ki = 2.0
             hI = [2.75, 2.5, 2.2]
-        if self.height > 350.01:  # 350+
+        if self.height > 350.0:  # 350+
             self.ki = 2.0
             hI = [2.75, 2.75, 2.35]
 
@@ -338,9 +338,9 @@ class Calculator:
             klRight = 1.2
         if 50.0 < lenRight <= 100.0:
             klRight = 1.1
-        if 100.01 < lenRight <= 150.0:
+        if 100.0 < lenRight <= 150.0:
             klRight = 1.05
-        elif lenRight > 150.01:
+        elif lenRight > 150.0:
             klRight = 1.0
 
         # коэффициент влияния угла направления ветра
