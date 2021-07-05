@@ -18,63 +18,63 @@ class Calculator:
         self.vet = vet
         self.gol = gol
 
-        # self.Ki   #Ki - коэффициент изменения ощины стенки гололеда по высоте (2.5.4. ПУЭ)
-        # self.Kw   #Kw - коэффициент изменения ветрового давления по высоте в зависимости от типа местности и высоты (табл. 2.5.2 ПУЭ)
-        # self.Kd   #Kd - коэффициент зменения толщины стенки гололеда в зависимости от диаметра провода
-        # self.Kf   #Kf - коэффициент надежности по гололедной нагрузке (1.3 - 1 и 2 район, 1.6 - 3 и выше
+        # self.ki   #ki - коэффициент изменения ощины стенки гололеда по высоте (2.5.4. ПУЭ)
+        # self.kw   #kw - коэффициент изменения ветрового давления по высоте в зависимости от типа местности и высоты (табл. 2.5.2 ПУЭ)
+        # self.kd   #kd - коэффициент зменения толщины стенки гололеда в зависимости от диаметра провода
+        # self.kf   #kf - коэффициент надежности по гололедной нагрузке (1.3 - 1 и 2 район, 1.6 - 3 и выше
 
     def koef(self):
         if self.height <= 15.0:  # 15
-            self.Ki = 1.0
+            self.ki = 1.0
             hI = [1.0, 0.65, 0.4]
-        if 15.01 <= self.height <= 30.0:  # 20
-            self.Ki = 1.0
+        if 15.0 < self.height <= 30.0:  # 20
+            self.ki = 1.0
             hI = [1.25, 0.85, 0.55]
-        if 30.01 <= self.height <= 50.0:  # 40
-            self.Ki = 1.4
+        if 30.0 < self.height <= 50.0:  # 40
+            self.ki = 1.4
             hI = [1.5, 1.1, 0.8]
-        if 50.01 <= self.height <= 70.0:  # 60
-            self.Ki = 1.6
+        if 50.0 < self.height <= 70.0:  # 60
+            self.ki = 1.6
             hI = [1.7, 1.3, 1.0]
-        if 70.01 <= self.height <= 90.0:  # 80
-            self.Ki = 1.8
+        if 70.0 < self.height <= 90.0:  # 80
+            self.ki = 1.8
             hI = [1.85, 1.45, 1.15]
-        if 90.01 <= self.height <= 125.0:  # 100
-            self.Ki = 2.0
+        if 90.0 < self.height <= 125.0:  # 100
+            self.ki = 2.0
             hI = [2.0, 1.6, 1.25]
-        if 125.01 <= self.height <= 175.0:  # 150
-            self.Ki = 2.0
+        if 125.0 < self.height <= 175.0:  # 150
+            self.ki = 2.0
             hI = [2.25, 1.9, 1.55]
-        if 175.01 <= self.height <= 225.0:  # 200
-            self.Ki = 2.0
+        if 175.0 < self.height <= 225.0:  # 200
+            self.ki = 2.0
             hI = [2.45, 2.1, 1.8]
-        if 225.01 <= self.height <= 275.0:  # 250
-            self.Ki = 2.0
+        if 225.0 < self.height <= 275.0:  # 250
+            self.ki = 2.0
             hI = [2.65, 2.3, 2.0]
-        if 275.01 <= self.height <= 350.0:  # 300
-            self.Ki = 2.0
+        if 275.0 < self.height <= 350.0:  # 300
+            self.ki = 2.0
             hI = [2.75, 2.5, 2.2]
-        if self.height > 350.01:  # 350+
-            self.Ki = 2.0
+        if self.height > 350.0:  # 350+
+            self.ki = 2.0
             hI = [2.75, 2.75, 2.35]
 
-        self.Kw = hI[self.land]
+        self.kw = hI[self.land]
 
         if self.diam <= 15.0:
-            self.Kd = 1.0
+            self.kd = 1.0
         if 15.0 < self.diam <= 25.0:
-            self.Kd = 0.9
+            self.kd = 0.9
         if 25.0 < self.diam <= 35.0:
-            self.Kd = 0.8
+            self.kd = 0.8
         if 35.0 < self.diam <= 55.0:
-            self.Kd = 0.7
+            self.kd = 0.7
         if self.diam > 55.0:
-            self.Kd = 0.6
+            self.kd = 0.6
 
         if self.gol <= 2:
-            self.Kf = 1.3
+            self.kf = 1.3
         if self.gol > 2:
-            self.Kf = 1.6
+            self.kf = 1.6
 
     def lineCalc(self, lenth, strela, angle):
 
@@ -87,71 +87,71 @@ class Calculator:
         wCab = (self.massa * 9.8) / 1000
 
         # Начальная нагрузка
-        hNul = ((wCab * (lenth ** 2)) / (8 * strela)) / 1000
+        hnul = ((wCab * (lenth ** 2)) / (8 * strela)) / 1000
 
         # Фактическая длина кабеля
         lenCab = lenth + ((8 * (strela ** 2)) / (3 * lenth))
 
         # Длина кабеля в ненагруженном состоянии
-        lenNon = lenCab / (1 + (hNul / (self.modul * self.sech)))
+        lenNon = lenCab / (1 + (hnul / (self.modul * self.sech)))
 
         # Расчет монтажной таблицы
-        Tf = [-30, -20, -10, 0.0, 10, 20, 30, 40, 50, 60, 70]
-        Sf = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        Hf = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        tf = [-30, -20, -10, 0.0, 10, 20, 30, 40, 50, 60, 70]
+        sf = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        hf = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-        for i in range(len(Tf)):
+        for i in range(len(tf)):
             # Длина кабеля с учетом температуры
-            Lnk = lenNon * (1 + self.tklr * (Tf[i] - self.temp))
+            lnk = lenNon * (1 + self.tklr * (tf[i] - self.temp))
             # Члены уравнения
-            a = 3 * (lenth ** 2 - lenth * Lnk) / 8
-            b = (-3 * wCab * (lenth ** 3) * Lnk) / (64 * self.modul * 1000 * self.sech)
+            a = 3 * (lenth ** 2 - lenth * lnk) / 8
+            b = (-3 * wCab * (lenth ** 3) * lnk) / (64 * self.modul * 1000 * self.sech)
             dis = ((a / 3) ** 3) + ((-b / 2) ** 2)
             if dis >= 0:
                 X = (-b / 2) + (math.sqrt(dis))
                 Y = (-b / 2) - (math.sqrt(dis))
                 if X >= 0:
-                    Xcub = X ** (1.0 / 3)
+                    xcub = X ** (1.0 / 3)
                 else:
-                    Xcub = (-1) * ((math.fabs(X)) ** (1.0 / 3))
+                    xcub = (-1) * ((math.fabs(X)) ** (1.0 / 3))
                 if Y >= 0:
-                    Ycub = Y ** (1.0 / 3)
+                    ycub = Y ** (1.0 / 3)
                 else:
-                    Ycub = (-1) * ((math.fabs(Y)) ** (1.0 / 3))
-                Sf[i] = Xcub + Ycub
+                    ycub = (-1) * ((math.fabs(Y)) ** (1.0 / 3))
+                sf[i] = xcub + ycub
             else:
-                Sf[i] = 2 * (math.sqrt(-a / 3)) * (math.cos((1.0 / 3) * (math.acos((-b / 2) / ((-a / 3) ** (3.0 / 2.0))))))
-            Hf[i] = ((wCab * (lenth ** 2)) / (8 * Sf[i])) / 1000
-            if Hf[i] > self.mdrn:
+                sf[i] = 2 * (math.sqrt(-a / 3)) * (math.cos((1.0 / 3) * (math.acos((-b / 2) / ((-a / 3) ** (3.0 / 2.0))))))
+            hf[i] = ((wCab * (lenth ** 2)) / (8 * sf[i])) / 1000
+            if hf[i] > self.mdrn:
                 line_warning = True
 
-            Sf[i] = round(Sf[i], 2)
-            Hf[i] = round(Hf[i], 2)
+            sf[i] = round(sf[i], 2)
+            hf[i] = round(hf[i], 2)
 
-        # for k in range(len(Hf)):
-        #     if Hf[k] > self.mdrn:
+        # for k in range(len(hf)):
+        #     if hf[k] > self.mdrn:
         #         line_w
 
         # Расчет климатических нагрузок
         cg = [10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0]  # Толщина стенки гололеда
         vd = [400.0, 500.0, 650.0, 800.0, 1000.0, 1250.0, 1500.0]  # Ветровое давление
-        WgolNorm = (0.9e-3) * 9.8 * self.Ki * self.Kd * math.pi * (cg[self.gol - 1] * (self.diam + self.Ki * self.Kd * cg[self.gol - 1]))  #  нормативная гололедная нагрузка на 1 м кабеля
-        Wgolol = WgolNorm * self.Kf * 0.5  # расчетная голоедная нагрузка на 1 м кабеля
-        Wgol = wCab + Wgolol   # Вес кабеля, покрытого гололедом
+        wGolnorm = (0.9e-3) * 9.8 * self.ki * self.kd * math.pi * (cg[self.gol - 1] * (self.diam + self.ki * self.kd * cg[self.gol - 1]))  #  нормативная гололедная нагрузка на 1 м кабеля
+        wGolol = wGolnorm * self.kf * 0.5  # расчетная голоедная нагрузка на 1 м кабеля
+        wGol = wCab + wGolol   # Вес кабеля, покрытого гололедом
         av = [0.76, 0.71, 0.7, 0.7, 0.7, 0.7, 0.7]  # Коэффициент неравномерности ветрового давления
         avg = [1.0, 1.0, 1.0, 1.0, 0.9, 0.84, 0.72]
-        Skl = [0, 0, 0, 0]
-        Hkl = [0, 0, 0, 0]
-        Kl = 0.0
+        skl = [0, 0, 0, 0]
+        hkl = [0, 0, 0, 0]
+        kl = 0.0
 
         if lenth <= 50.0:  # Коэф. влияния длины пролета на ветровую нагрузку
-            Kl = 1.2
+            kl = 1.2
         if 50.0 < lenth <= 100.0:
-            Kl = 1.1
+            kl = 1.1
         if 100.0 < lenth <= 150.0:
-            Kl = 1.05
+            kl = 1.05
         elif lenth > 150.0:
-            Kl = 1.0
+            kl = 1.0
 
         angkoef = math.sin((angle * math.pi) / 180) * math.sin((angle * math.pi) / 180)
 
@@ -161,58 +161,58 @@ class Calculator:
             vg = 200.0
 
         # норм. ветр. нагр. при гололеде пролет
-        Wvgp = avg[self.vet - 1] * Kl * self.Kw * 1.2 * vg * (self.diam + 2 * cg[self.gol - 1]) * 1e-3 * angkoef * lenth
+        wwgp = avg[self.vet - 1] * kl * self.kw * 1.2 * vg * (self.diam + 2 * cg[self.gol - 1]) * 1e-3 * angkoef * lenth
 
         # //расч. ветр. нагр. при гололеде
-        Wvgr = Wvgp * 1.1
+        wvgr = wwgp * 1.1
 
-        Wvg = Wvgr / lenth   # Ветровая нагрузка при гололеде 1 m
+        wvg = wvgr / lenth   # Ветровая нагрузка при гололеде 1 m
 
-        Wmax = math.sqrt(Wgol ** 2 + Wvg ** 2)  # Суммарная нагрузка гололед и ветер
+        wmax = math.sqrt(wGol ** 2 + wvg ** 2)  # Суммарная нагрузка гололед и ветер
 
         if self.diam >= 20:  # Коэффициент лобового сопротивления в зависимости от диаметра кабеля
-            Cx = 1.1
+            cx = 1.1
         else:
-            Cx = 1.2
+            cx = 1.2
 
-        Wvnp = av[self.vet - 1] * Kl * self.Kw * Cx * vd[self.vet - 1] * self.diam * 1e-3 * angkoef * lenth  # норм. ветр. нагрузка на кабель без гололеда
-        Wvr = Wvnp * 1.1  # расч. ветр. нагрузка на кабель без гололеда
-        Wv = Wvr / lenth  # расч. ветр. нагрузка на 1 m кабель без гололеда
-        Wvet = math.sqrt(wCab ** 2 + Wv ** 2)  # Суммарная нагрузка, ветер без гололеда
-        Wkl = [wCab, Wgol, Wmax, Wvet]
-        Tkl = [10.0, -5.0, -5.0, -5.0]
+        wvnp = av[self.vet - 1] * kl * self.kw * cx * vd[self.vet - 1] * self.diam * 1e-3 * angkoef * lenth  # норм. ветр. нагрузка на кабель без гололеда
+        wvr = wvnp * 1.1  # расч. ветр. нагрузка на кабель без гололеда
+        wv = wvr / lenth  # расч. ветр. нагрузка на 1 m кабель без гололеда
+        wvet = math.sqrt(wCab ** 2 + wv ** 2)  # Суммарная нагрузка, ветер без гололеда
+        wkl = [wCab, wGol, wmax, wvet]
+        tkl = [10.0, -5.0, -5.0, -5.0]
         aa = [0.0, 0.0, 0.0, 0.0]
         bb = [0.0, 0.0, 0.0, 0.0]
         disa = [0.0, 0.0, 0.0, 0.0]
         lnka = [0.0, 0.0, 0.0, 0.0]
 
-        for k in range(len(Wkl)):
+        for k in range(len(wkl)):
             # Длина кабеля с учетом температуры
-            lnka[k] = lenNon * (1 + self.tklr * (Tkl[k] - self.temp))
+            lnka[k] = lenNon * (1 + self.tklr * (tkl[k] - self.temp))
             aa[k] = 3 * (lenth ** 2 - lenth * lnka[k]) / 8
-            bb[k] = (-3 * Wkl[k] * (lenth ** 3) * lnka[k]) / (64 * self.modul * 1000 * self.sech)
+            bb[k] = (-3 * wkl[k] * (lenth ** 3) * lnka[k]) / (64 * self.modul * 1000 * self.sech)
             disa[k] = ((aa[k] / 3) ** 3) + ((-bb[k] / 2) ** 2)
             if disa[k] >= 0:
-                Xa = (-bb[k] / 2) + (math.sqrt(disa[k]))
-                Ya = (-bb[k] / 2) - (math.sqrt(disa[k]))
-                if Xa >= 0:
-                    Xacub = Xa ** (1.0 / 3)
+                xa = (-bb[k] / 2) + (math.sqrt(disa[k]))
+                ya = (-bb[k] / 2) - (math.sqrt(disa[k]))
+                if xa >= 0:
+                    xacub = xa ** (1.0 / 3)
                 else:
-                    Xacub = (-1) * ((math.fabs(Xa)) ** (1.0 / 3))
-                if Ya >= 0:
-                    Yacub = Ya ** (1.0 / 3)
+                    xacub = (-1) * ((math.fabs(xa)) ** (1.0 / 3))
+                if ya >= 0:
+                    yacub = ya ** (1.0 / 3)
                 else:
-                    Yacub = (-1) * ((math.fabs(Ya)) ** (1.0 / 3))
-                Skl[k] = Xacub + Yacub
+                    yacub = (-1) * ((math.fabs(ya)) ** (1.0 / 3))
+                skl[k] = xacub + yacub
             else:
-                Skl[k] = 2 * (math.sqrt(-aa[k] / 3)) * (
+                skl[k] = 2 * (math.sqrt(-aa[k] / 3)) * (
                     math.cos((1.0 / 3) * (math.acos((-bb[k] / 2) / ((-aa[k] / 3) ** (3.0 / 2.0))))))
-            Hkl[k] = ((Wkl[k] * (lenth ** 2)) / (8 * Skl[k])) / 1000
-            if Hkl[k] > self.mdrn:
+            hkl[k] = ((wkl[k] * (lenth ** 2)) / (8 * skl[k])) / 1000
+            if hkl[k] > self.mdrn:
                 line_warning = True
 
-            Skl[k] = round(Skl[k], 2)
-            Hkl[k] = round(Hkl[k], 2)
+            skl[k] = round(skl[k], 2)
+            hkl[k] = round(hkl[k], 2)
 
         lineResult = LineResult(self.vet,
                                 self.gol,
@@ -227,38 +227,38 @@ class Calculator:
                                 self.sech,
                                 self.modul,
                                 self.tklr,
-                                Skl[0],
-                                Hkl[0],
-                                Skl[1],
-                                Hkl[1],
-                                Skl[3],
-                                Hkl[3],
-                                Skl[2],
-                                Hkl[2],
-                                Sf[0],
-                                Sf[1],
-                                Sf[2],
-                                Sf[3],
-                                Sf[4],
-                                Sf[5],
-                                Sf[6],
-                                Sf[7],
-                                Sf[8],
-                                Sf[9],
-                                Sf[10],
-                                Hf[0],
-                                Hf[1],
-                                Hf[2],
-                                Hf[3],
-                                Hf[4],
-                                Hf[5],
-                                Hf[6],
-                                Hf[7],
-                                Hf[8],
-                                Hf[9],
-                                Hf[10],
+                                skl[0],
+                                hkl[0],
+                                skl[1],
+                                hkl[1],
+                                skl[3],
+                                hkl[3],
+                                skl[2],
+                                hkl[2],
+                                sf[0],
+                                sf[1],
+                                sf[2],
+                                sf[3],
+                                sf[4],
+                                sf[5],
+                                sf[6],
+                                sf[7],
+                                sf[8],
+                                sf[9],
+                                sf[10],
+                                hf[0],
+                                hf[1],
+                                hf[2],
+                                hf[3],
+                                hf[4],
+                                hf[5],
+                                hf[6],
+                                hf[7],
+                                hf[8],
+                                hf[9],
+                                hf[10],
                                 round(wCab, 2),
-                                round(hNul, 2),
+                                round(hnul, 2),
                                 round(lenCab, 2),
                                 round(lenNon, 2),
                                 self.temp,
@@ -267,31 +267,31 @@ class Calculator:
                                 round(bb[0], 2),
                                 round(disa[0], 2),
                                 round(lnka[1], 2),
-                                round(WgolNorm, 2),
-                                self.Ki,
-                                self.Kd,
-                                self.Kf,
-                                round(Wgolol, 2),
-                                round(Wgol, 2),
+                                round(wGolnorm, 2),
+                                self.ki,
+                                self.kd,
+                                self.kf,
+                                round(wGolol, 2),
+                                round(wGol, 2),
                                 round(aa[1], 2),
                                 round(bb[1], 2),
                                 round(disa[1], 2),
                                 av[self.vet - 1],
-                                Kl,
-                                self.Kw,
-                                Cx,
-                                round(Wvnp, 2),
-                                round(Wvr, 2),
-                                round(Wv, 2),
-                                round(Wvet, 2),
+                                kl,
+                                self.kw,
+                                cx,
+                                round(wvnp, 2),
+                                round(wvr, 2),
+                                round(wv, 2),
+                                round(wvet, 2),
                                 round(aa[3], 2),
                                 round(bb[3], 2),
                                 round(disa[3], 2),
                                 avg[self.vet - 1],
-                                round(Wvgp, 2),
-                                round(Wvgr, 2),
-                                round(Wvg, 2),
-                                round(Wmax, 2),
+                                round(wwgp, 2),
+                                round(wvgr, 2),
+                                round(wvg, 2),
+                                round(wmax, 2),
                                 round(aa[2], 2),
                                 round(bb[2], 2),
                                 round(disa[2], 2),
@@ -300,160 +300,160 @@ class Calculator:
 
         return lineResult
 
-        # return Hf, Sf, Hkl, Skl
+        # return hf, sf, hkl, skl
 
     def pillarCalc(self, lenLeft, strLeft, lenRight, strRight, angle):
 
         self.koef()
 
         # сбор нагрузок
-        Wcab = (self.massa * 9.8) / 1000  # Вес 1 м кабеля
+        wCab = (self.massa * 9.8) / 1000  # Вес 1 м кабеля
         cg = [10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0]  # Толщина стенки гололеда
         vd = [400.0, 500.0, 650.0, 800.0, 1000.0, 1250.0, 1500.0]  # Ветровое давление
         # нормативная гололедная нагрузка на 1 м кабеля
-        WgolNorm = 0.0009 * 9.8 * self.Ki * self.Kd * math.pi * cg[self.gol - 1] * (
-                self.diam + self.Ki * self.Kd * cg[self.gol - 1])
-        Wgolol_1 = WgolNorm * self.Kf * 1  # расчетная гололедная нагрузка на 1 м кабеля 1ГПС
-        Wgolol_2 = WgolNorm * self.Kf * 0.5  # расчетная гололедная нагрузка на 1 м кабеля 2ГПС
+        wGolnorm = 0.0009 * 9.8 * self.ki * self.kd * math.pi * cg[self.gol - 1] * (
+                self.diam + self.ki * self.kd * cg[self.gol - 1])
+        wGolol_1 = wGolnorm * self.kf * 1  # расчетная гололедная нагрузка на 1 м кабеля 1ГПС
+        wGolol_2 = wGolnorm * self.kf * 0.5  # расчетная гололедная нагрузка на 1 м кабеля 2ГПС
 
-        WTGol = Wcab + WgolNorm  # нормативная нагрузка на 1 м кабеля (вес кабеля + вес гололеда)
+        wTGol = wCab + wGolnorm  # нормативная нагрузка на 1 м кабеля (вес кабеля + вес гололеда)
 
-        Wgol_1 = Wcab + Wgolol_1  # расчетная нагрузка на 1 м кабеля (вес кабеля + вес гололеда) 1ГПС
-        Wgol_2 = Wcab + Wgolol_2  # расчетная нагрузка на 1 м кабеля (вес кабеля + вес гололеда) 2ГПС
+        wGol_1 = wCab + wGolol_1  # расчетная нагрузка на 1 м кабеля (вес кабеля + вес гололеда) 1ГПС
+        wGol_2 = wCab + wGolol_2  # расчетная нагрузка на 1 м кабеля (вес кабеля + вес гололеда) 2ГПС
 
         av = [0.76, 0.71, 0.7, 0.7, 0.7, 0.7, 0.7]  # Коэффициент неравномерности ветрового давления
         avg = [1.0, 1.0, 1.0, 1.0, 0.9, 0.84, 0.72]  # Коэффициент неравномерности ветрового давления при гололеде
 
         # Коэф. влияния длины пролета на ветровую нагрузку
         if lenLeft <= 50.0:  # левый пролет
-            KlLeft = 1.2
+            klLeft = 1.2
         if 50.0 < lenLeft <= 100.0:
-            KlLeft = 1.1
+            klLeft = 1.1
         if 100.0 < lenLeft <= 150.0:
-            KlLeft = 1.05
+            klLeft = 1.05
         elif lenLeft > 150.0:
-            KlLeft = 1.0
+            klLeft = 1.0
 
         if lenRight <= 50.0:  # правый пролет
-            KlRight = 1.2
+            klRight = 1.2
         if 50.0 < lenRight <= 100.0:
-            KlRight = 1.1
-        if 100.01 < lenRight <= 150.0:
-            KlRight = 1.05
-        elif lenRight > 150.01:
-            KlRight = 1.0
+            klRight = 1.1
+        if 100.0 < lenRight <= 150.0:
+            klRight = 1.05
+        elif lenRight > 150.0:
+            klRight = 1.0
 
         # коэффициент влияния угла направления ветра
         angkoef = math.sin((angle * math.pi) / 180) * math.sin((angle * math.pi) / 180)
         # нормативная ветровая нагрузка при гололеде левый пролет
-        WGN_L = avg[self.vet - 1] * KlLeft * self.Kw * 1.2 * (vd[self.vet - 1] * 0.25) * (
+        wgn_L = avg[self.vet - 1] * klLeft * self.kw * 1.2 * (vd[self.vet - 1] * 0.25) * (
                 self.diam + 2 * cg[self.gol - 1]) * 0.001 * lenLeft * angkoef
         # нормативная ветровая нагрузка при гололеде правый пролет
-        WGN_R = avg[self.vet - 1] * KlRight * self.Kw * 1.2 * (vd[self.vet - 1] * 0.25) * (
+        wgn_r = avg[self.vet - 1] * klRight * self.kw * 1.2 * (vd[self.vet - 1] * 0.25) * (
                 self.diam + 2 * cg[self.gol - 1]) * 0.001 * lenRight * angkoef
 
-        WG1_L = WGN_L * 1.3  # расчетная ветровая нагрузка при гололеде левый пролет 1ГПС
-        WG2_L = WGN_L * 1.1  # расчетная ветровая нагрузка при гололеде левый пролет 2ГПС
-        WG1_R = WGN_R * 1.3  # расчетная ветровая нагрузка при гололеде правый пролет 1ГПС
-        WG2_R = WGN_R * 1.1  # расчетная ветровая нагрузка при гололеде правый пролет 2ГПС
+        wG1_L = wgn_L * 1.3  # расчетная ветровая нагрузка при гололеде левый пролет 1ГПС
+        wG2_L = wgn_L * 1.1  # расчетная ветровая нагрузка при гололеде левый пролет 2ГПС
+        wG1_R = wgn_r * 1.3  # расчетная ветровая нагрузка при гололеде правый пролет 1ГПС
+        wG2_R = wgn_r * 1.1  # расчетная ветровая нагрузка при гололеде правый пролет 2ГПС
 
         # нормативная нагрузка кабель + ветер + гололед на 1 м левый пролет
-        Wmax_1 = math.sqrt((Wcab + WgolNorm) ** 2 + (WGN_L / lenLeft) ** 2)
+        wmax_1 = math.sqrt((wCab + wGolnorm) ** 2 + (wgn_L / lenLeft) ** 2)
         # нормативная нагрузка кабель + ветер + гололед на 1 м правый пролет
-        WmaxR_1 = math.sqrt((Wcab + WgolNorm) ** 2 + (WGN_R / lenRight) ** 2)
+        wmaxR_1 = math.sqrt((wCab + wGolnorm) ** 2 + (wgn_r / lenRight) ** 2)
 
         if self.diam >= 20:  # Коэффициент лобового сопротивления в зависимости от диаметра кабеля
-            Cx = 1.1
+            cx = 1.1
         else:
-            Cx = 1.2
+            cx = 1.2
 
         # Нормативная ветровая нагрузка левый пролет
-        WLNormL = av[self.vet - 1] * KlLeft * self.Kw * Cx * vd[self.vet - 1] * self.diam * 0.001 * lenLeft * angkoef
+        wlnormL = av[self.vet - 1] * klLeft * self.kw * cx * vd[self.vet - 1] * self.diam * 0.001 * lenLeft * angkoef
         # Нормативная ветровая нагрузка правый пролет
-        WLNormR = av[self.vet - 1] * KlRight * self.Kw * Cx * vd[self.vet - 1] * self.diam * 0.001 * lenRight * angkoef
+        wlnormR = av[self.vet - 1] * klRight * self.kw * cx * vd[self.vet - 1] * self.diam * 0.001 * lenRight * angkoef
 
-        WL_1 = WLNormL * 1.3  # расчетная ветровая нагрузка левый пролет 1ГПС
-        WR_1 = WLNormR * 1.3  # расчетная ветровая нагрузка правый пролет 1ГПС
-        WL_2 = WLNormL * 1.1  # расчетная ветровая нагрузка левый пролет 2ГПС
-        WR_2 = WLNormR * 1.1  # расчетная ветровая нагрузка правый пролет 2ГПС
+        wL_1 = wlnormL * 1.3  # расчетная ветровая нагрузка левый пролет 1ГПС
+        wR_1 = wlnormR * 1.3  # расчетная ветровая нагрузка правый пролет 1ГПС
+        wL_2 = wlnormL * 1.1  # расчетная ветровая нагрузка левый пролет 2ГПС
+        wR_2 = wlnormR * 1.1  # расчетная ветровая нагрузка правый пролет 2ГПС
 
         # нормативная нагрузка кабель + ветер на 1 м правый пролет
-        WvetR_1 = math.sqrt(Wcab ** 2 + (WLNormR / lenRight) ** 2)
+        wvetR_1 = math.sqrt(wCab ** 2 + (wlnormR / lenRight) ** 2)
         # нормативная нагрузка кабель + ветер на 1 м левый пролет
-        Wvet_1 = math.sqrt(Wcab ** 2 + (WLNormL / lenLeft) ** 2)
+        wvet_1 = math.sqrt(wCab ** 2 + (wlnormL / lenLeft) ** 2)
 
         # вес кабеля левый пролет
-        WcabLeft = round((Wcab * lenLeft), 2)
+        wCabLeft = round((wCab * lenLeft), 2)
 
         # вес кабеля правый пролет
-        WcabRight = round((Wcab * lenRight), 2)
+        wCabRight = round((wCab * lenRight), 2)
 
         # уравнение состояния провода ветер + гололед, левый пролет
-        line_max1_left = self.wireCalc(lenLeft, strLeft, -5.0, self.temp, self.modul, self.tklr, self.sech, Wcab,
-                                       Wmax_1)
+        line_max1_left = self.wireCalc(lenLeft, strLeft, -5.0, self.temp, self.modul, self.tklr, self.sech, wCab,
+                                       wmax_1)
 
         # уравнение состояния провода ветер + гололед, правый пролет
-        line_max1_right = self.wireCalc(lenRight, strRight, -5.0, self.temp, self.modul, self.tklr, self.sech, Wcab,
-                                        WmaxR_1)
+        line_max1_right = self.wireCalc(lenRight, strRight, -5.0, self.temp, self.modul, self.tklr, self.sech, wCab,
+                                        wmaxR_1)
 
         # уравнение состояния провода ветер, левый пролет
-        line_vet1_left = self.wireCalc(lenLeft, strLeft, -5.0, self.temp, self.modul, self.tklr, self.sech, Wcab,
-                                       Wvet_1)
+        line_vet1_left = self.wireCalc(lenLeft, strLeft, -5.0, self.temp, self.modul, self.tklr, self.sech, wCab,
+                                       wvet_1)
 
         # уравнение состояния провода ветер, правый пролет
-        line_vet1_right = self.wireCalc(lenRight, strRight, -5.0, self.temp, self.modul, self.tklr, self.sech, Wcab,
-                                        WvetR_1)
+        line_vet1_right = self.wireCalc(lenRight, strRight, -5.0, self.temp, self.modul, self.tklr, self.sech, wCab,
+                                        wvetR_1)
 
         # уравнение состояния провода гололед, левый пролет
-        line_gol1_left = self.wireCalc(lenLeft, strLeft, -5.0, self.temp, self.modul, self.tklr, self.sech, Wcab, WTGol)
+        line_gol1_left = self.wireCalc(lenLeft, strLeft, -5.0, self.temp, self.modul, self.tklr, self.sech, wCab, wTGol)
 
         # уравнение состояния провода гололед, правый пролет
-        line_gol1_right = self.wireCalc(lenRight, strRight, -5.0, self.temp, self.modul, self.tklr, self.sech, Wcab,
-                                        WTGol)
+        line_gol1_right = self.wireCalc(lenRight, strRight, -5.0, self.temp, self.modul, self.tklr, self.sech, wCab,
+                                        wTGol)
 
         # сохранение результатов в экземпляр класса
 
-        pillresult = PillarResult(round(Wcab, 2),
-                                  round(WgolNorm, 2),
-                                  round(Wgolol_1, 2),
-                                  round(Wgolol_2, 2),
-                                  round(WTGol, 2),
-                                  round(Wgol_1, 2),
-                                  round(Wgol_2, 2),
-                                  KlLeft,
-                                  KlRight,
+        pillresult = PillarResult(round(wCab, 2),
+                                  round(wGolnorm, 2),
+                                  round(wGolol_1, 2),
+                                  round(wGolol_2, 2),
+                                  round(wTGol, 2),
+                                  round(wGol_1, 2),
+                                  round(wGol_2, 2),
+                                  klLeft,
+                                  klRight,
                                   angkoef,
-                                  round(WGN_L, 2),
-                                  round(WGN_R, 2),
-                                  round(WG1_L, 2),
-                                  round(WG2_L, 2),
-                                  round(WG1_R, 2),
-                                  round(WG2_R, 2),
-                                  round(Wmax_1, 2),
-                                  round(WmaxR_1, 2),
-                                  Cx,
-                                  round(WLNormL, 2),
-                                  round(WLNormR, 2),
-                                  round(WL_1, 2),
-                                  round(WR_1, 2),
-                                  round(WL_2, 2),
-                                  round(WR_2, 2),
-                                  round(WvetR_1, 2),
-                                  round(Wvet_1, 2),
-                                  round(WcabLeft, 2),
-                                  round(WcabRight, 2),
+                                  round(wgn_L, 2),
+                                  round(wgn_r, 2),
+                                  round(wG1_L, 2),
+                                  round(wG2_L, 2),
+                                  round(wG1_R, 2),
+                                  round(wG2_R, 2),
+                                  round(wmax_1, 2),
+                                  round(wmaxR_1, 2),
+                                  cx,
+                                  round(wlnormL, 2),
+                                  round(wlnormR, 2),
+                                  round(wL_1, 2),
+                                  round(wR_1, 2),
+                                  round(wL_2, 2),
+                                  round(wR_2, 2),
+                                  round(wvetR_1, 2),
+                                  round(wvet_1, 2),
+                                  round(wCabLeft, 2),
+                                  round(wCabRight, 2),
                                   line_max1_left,
                                   line_max1_right,
                                   line_vet1_left,
                                   line_vet1_right,
                                   line_gol1_left,
                                   line_gol1_right,
-                                  self.Ki,
-                                  self.Kd,
+                                  self.ki,
+                                  self.kd,
                                   cg[self.gol - 1],
-                                  self.Kf,
+                                  self.kf,
                                   av[self.vet - 1],
-                                  self.Kw,
+                                  self.kw,
                                   vd[self.vet - 1],
                                   avg[self.vet - 1],
                                   round((line_max1_left[1] * 1.3), 2),  # t1_2L
@@ -463,15 +463,15 @@ class Calculator:
                                   round((line_gol1_left[1] * 1.3), 2),  # t1_3L
                                   round((line_gol1_right[1] * 1.3), 2),  # t1_3R
                                   round((line_gol1_right[1] * 1.3), 2),  # t1_4R
-                                  round(((Wcab * lenLeft + Wcab * lenRight) / 2), 2),  # g1_1
-                                  round(((Wgol_1 * lenLeft + Wgol_1 * lenRight) / 2), 2),  # g1_2
-                                  round(((Wcab * lenLeft + Wcab * lenRight) / 2), 2),  # g2_1
-                                  round(((Wgol_2 * lenLeft + Wgol_2 * lenRight) / 2), 2),  # g2_2
-                                  round(((WL_1 + WR_1) / 2), 2),  # p1_1
-                                  round(((WL_2 + WR_2) / 2), 2),  # p2_1
-                                  round(((WG1_L + WG1_R) / 2), 2),  # p1_2
-                                  round(((WG2_L + WG2_R) / 2), 2),  # p2_2
-                                  round(((Wgol_1 * lenRight) / 2), 2),  # g1_4
+                                  round(((wCab * lenLeft + wCab * lenRight) / 2), 2),  # g1_1
+                                  round(((wGol_1 * lenLeft + wGol_1 * lenRight) / 2), 2),  # g1_2
+                                  round(((wCab * lenLeft + wCab * lenRight) / 2), 2),  # g2_1
+                                  round(((wGol_2 * lenLeft + wGol_2 * lenRight) / 2), 2),  # g2_2
+                                  round(((wL_1 + wR_1) / 2), 2),  # p1_1
+                                  round(((wL_2 + wR_2) / 2), 2),  # p2_1
+                                  round(((wG1_L + wG1_R) / 2), 2),  # p1_2
+                                  round(((wG2_L + wG2_R) / 2), 2),  # p2_2
+                                  round(((wGol_1 * lenRight) / 2), 2),  # g1_4
                                   self.diam,
                                   lenLeft,
                                   lenRight,
@@ -489,50 +489,50 @@ class Calculator:
 
         return pillresult
 
-    def wireCalc(self, lenth, strela, temp_fact, temp_nach, modul, tklr, scab, Wcab, Wnagr):
+    def wireCalc(self, lenth, strela, temp_fact, temp_nach, modul, tklr, scab, wCab, wnagr):
         # Начальная нагрузка
-        Hnul = ((Wcab * (lenth ** 2)) / (8 * strela)) / 1000
+        hnul = ((wCab * (lenth ** 2)) / (8 * strela)) / 1000
 
         # Фактическая длина кабеля
-        Lcab = lenth + ((8 * (strela ** 2)) / (3 * lenth))
+        lcab = lenth + ((8 * (strela ** 2)) / (3 * lenth))
 
         # Длина кабеля в ненагруженном состоянии
-        Ln = Lcab / (1 + (Hnul / (modul * scab)))
+        ln = lcab / (1 + (hnul / (modul * scab)))
 
         # длина кабеля в ненагруженном состоянии с учетом температуры
-        Lnk = Ln * (1 + tklr * (temp_fact - temp_nach))
+        lnk = ln * (1 + tklr * (temp_fact - temp_nach))
 
         # коэффициенты уравнения состояния провода
-        aa = 3 * (lenth ** 2 - lenth * Lnk) / 8
-        bb = (-3 * Wnagr * (lenth ** 3) * Lnk) / (64 * modul * 1000 * scab)
+        aa = 3 * (lenth ** 2 - lenth * lnk) / 8
+        bb = (-3 * wnagr * (lenth ** 3) * lnk) / (64 * modul * 1000 * scab)
 
         # дискриминант
         disa = ((aa / 3) ** 3) + ((-bb / 2) ** 2)
         if disa >= 0:
-            Xa = (-bb / 2) + (math.sqrt(disa))
-            Ya = (-bb / 2) - (math.sqrt(disa))
-            if Xa >= 0:
-                Xacub = Xa ** (1.0 / 3)
+            xa = (-bb / 2) + (math.sqrt(disa))
+            ya = (-bb / 2) - (math.sqrt(disa))
+            if xa >= 0:
+                xacub = xa ** (1.0 / 3)
             else:
-                Xacub = (-1) * ((math.fabs(Xa)) ** (1.0 / 3))
-            if Ya >= 0:
-                Yacub = Ya ** (1.0 / 3)
+                xacub = (-1) * ((math.fabs(xa)) ** (1.0 / 3))
+            if ya >= 0:
+                yacub = ya ** (1.0 / 3)
             else:
-                Yacub = (-1) * ((math.fabs(Ya)) ** (1.0 / 3))
-            Str_Calc = Xacub + Yacub  # расчетная стрела провеса
+                yacub = (-1) * ((math.fabs(ya)) ** (1.0 / 3))
+            str_Calc = xacub + yacub  # расчетная стрела провеса
         else:
-            Str_Calc = 2 * (math.sqrt(-aa / 3)) * (
+            str_Calc = 2 * (math.sqrt(-aa / 3)) * (
                 math.cos((1.0 / 3) * (math.acos((-bb / 2) / ((-aa / 3) ** (3.0 / 2.0))))))  # расчетная стрела провеса
-        H_Calc = ((Wnagr * (lenth ** 2)) / (8 * Str_Calc))  # расчетное тяжение
+        h_Calc = ((wnagr * (lenth ** 2)) / (8 * str_Calc))  # расчетное тяжение
 
-        Str_Res = round(Str_Calc, 2)
-        H_Res = round(H_Calc, 2)
+        str_Res = round(str_Calc, 2)
+        h_Res = round(h_Calc, 2)
         a_Res = round(aa, 3)
         b_Res = round(bb, 3)
-        D_Res = round(disa, 3)
-        Hnul_Res = round(Hnul, 3)
-        LenFact_Res = round(Lcab, 3)
-        LenStart_Res = round(Ln, 3)
-        LenTemp_Res = round(Lnk, 3)
+        d_Res = round(disa, 3)
+        hnul_Res = round(hnul, 3)
+        lenFact_Res = round(lcab, 3)
+        lenStart_Res = round(ln, 3)
+        lenTemp_Res = round(lnk, 3)
 
-        return Str_Res, H_Res, a_Res, b_Res, D_Res, Hnul_Res, LenFact_Res, LenStart_Res, LenTemp_Res
+        return str_Res, h_Res, a_Res, b_Res, d_Res, hnul_Res, lenFact_Res, lenStart_Res, lenTemp_Res
