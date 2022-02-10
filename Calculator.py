@@ -1,5 +1,6 @@
 import math
 
+from LineResultData import LineResultData
 from PillarResult import PillarResult
 from LineResult import LineResult
 
@@ -214,7 +215,7 @@ class Calculator:
             skl[k] = round(skl[k], 2)
             hkl[k] = round(hkl[k], 2)
 
-        lineResult = LineResult(self.vet,
+        lineResult = LineResultData(self.vet,
                                 self.gol,
                                 vd[self.vet - 1],
                                 cg[self.gol - 1],
@@ -299,6 +300,92 @@ class Calculator:
                                 line_warning)
 
         return lineResult
+
+        # lineResult = LineResult(self.vet,
+        #                         self.gol,
+        #                         vd[self.vet - 1],
+        #                         cg[self.gol - 1],
+        #                         self.land,
+        #                         lenth,
+        #                         strela,
+        #                         "cable_name",
+        #                         self.massa,
+        #                         self.diam,
+        #                         self.sech,
+        #                         self.modul,
+        #                         self.tklr,
+        #                         skl[0],
+        #                         hkl[0],
+        #                         skl[1],
+        #                         hkl[1],
+        #                         skl[3],
+        #                         hkl[3],
+        #                         skl[2],
+        #                         hkl[2],
+        #                         sf[0],
+        #                         sf[1],
+        #                         sf[2],
+        #                         sf[3],
+        #                         sf[4],
+        #                         sf[5],
+        #                         sf[6],
+        #                         sf[7],
+        #                         sf[8],
+        #                         sf[9],
+        #                         sf[10],
+        #                         hf[0],
+        #                         hf[1],
+        #                         hf[2],
+        #                         hf[3],
+        #                         hf[4],
+        #                         hf[5],
+        #                         hf[6],
+        #                         hf[7],
+        #                         hf[8],
+        #                         hf[9],
+        #                         hf[10],
+        #                         round(wCab, 2),
+        #                         round(hnul, 2),
+        #                         round(lenCab, 2),
+        #                         round(lenNon, 2),
+        #                         self.temp,
+        #                         round(lnka[0], 2),
+        #                         round(aa[0], 2),
+        #                         round(bb[0], 2),
+        #                         round(disa[0], 2),
+        #                         round(lnka[1], 2),
+        #                         round(wGolnorm, 2),
+        #                         self.ki,
+        #                         self.kd,
+        #                         self.kf,
+        #                         round(wGolol, 2),
+        #                         round(wGol, 2),
+        #                         round(aa[1], 2),
+        #                         round(bb[1], 2),
+        #                         round(disa[1], 2),
+        #                         av[self.vet - 1],
+        #                         kl,
+        #                         self.kw,
+        #                         cx,
+        #                         round(wvnp, 2),
+        #                         round(wvr, 2),
+        #                         round(wv, 2),
+        #                         round(wvet, 2),
+        #                         round(aa[3], 2),
+        #                         round(bb[3], 2),
+        #                         round(disa[3], 2),
+        #                         avg[self.vet - 1],
+        #                         round(wwgp, 2),
+        #                         round(wvgr, 2),
+        #                         round(wvg, 2),
+        #                         round(wmax, 2),
+        #                         round(aa[2], 2),
+        #                         round(bb[2], 2),
+        #                         round(disa[2], 2),
+        #                         vg,
+        #                         line_warning)
+        #
+        # return lineResult
 
         # return hf, sf, hkl, skl
 
