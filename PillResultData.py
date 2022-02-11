@@ -1,151 +1,82 @@
-# заготовка под dataclass
-class PillarResult:
-    def __init__(self,
-                 wCab,
-                 wGolNorm,
-                 wGolol_1,
-                 wGolol_2,
-                 wTGol,
-                 wgol_1,
-                 wgol_2,
-                 klLeft,
-                 klRight,
-                 angkoef,
-                 wGN_L,
-                 wGN_R,
-                 wG1_L,
-                 wG2_L,
-                 wG1_R,
-                 wG2_R,
-                 wmax_1,
-                 wmaxR_1,
-                 cx,
-                 wLNormL,
-                 wLNormR,
-                 wL_1,
-                 wR_1,
-                 wL_2,
-                 wR_2,
-                 wvetR_1,
-                 wvet_1,
-                 wCabLeft,
-                 wCabRight,
-                 line_max1_left,
-                 line_max1_right,
-                 line_vet1_left,
-                 line_vet1_right,
-                 line_gol1_left,
-                 line_gol1_right,
-                 ki,
-                 kd,
-                 cg,
-                 kf,
-                 av,
-                 kw,
-                 vd,
-                 avg,
-                 t1_2L,
-                 t1_2R,
-                 t1_1L,
-                 t1_1R,
-                 t1_3L,
-                 t1_3R,
-                 t1_4R,
-                 g1_1,
-                 g1_2,
-                 g2_1,
-                 g2_2,
-                 p1_1,
-                 p2_1,
-                 p1_2,
-                 p2_2,
-                 g1_4,
-                 diam,
-                 len_left,
-                 len_right,
-                 str_left,
-                 str_right,
-                 massa,
-                 sech,
-                 modul,
-                 tklr,
-                 temp,
-                 vet,
-                 gol,
-                 land):
-        self.wCab = wCab
-        self.wGolNorm = wGolNorm
-        self.wGolol_1 = wGolol_1
-        self.wGolol_2 = wGolol_2
-        self.wTGol = wTGol
-        self.wgol_1 = wgol_1
-        self.wgol_2 = wgol_2
-        self.klLeft = klLeft
-        self.klRight = klRight
-        self.angkoef = angkoef
-        self.wGN_L = wGN_L
-        self.wGN_R = wGN_R
-        self.wG1_L = wG1_L
-        self.wG2_L = wG2_L
-        self.wG1_R = wG1_R
-        self.wG2_R = wG2_R
-        self.wmax_1 = wmax_1
-        self.wmaxR_1 = wmaxR_1
-        self.cx = cx
-        self.wLNormL = wLNormL
-        self.wLNormR = wLNormR
-        self.wL_1 = wL_1
-        self.wR_1 = wR_1
-        self.wL_2 = wL_2
-        self.wR_2 = wR_2
-        self.wvetR_1 = wvetR_1
-        self.wvet_1 = wvet_1
-        self.wCabLeft = wCabLeft
-        self.wCabRight = wCabRight
-        self.line_max1_left = line_max1_left
-        self.line_max1_right = line_max1_right
-        self.line_vet1_left = line_vet1_left
-        self.line_vet1_right = line_vet1_right
-        self.line_gol1_left = line_gol1_left
-        self.line_gol1_right = line_gol1_right
-        self.ki = ki
-        self.kd = kd
-        self.cg = cg
-        self.kf = kf
-        self.av = av
-        self.kw = kw
-        self.vd = vd
-        self.avg = avg
-        self.t1_2L = t1_2L
-        self.t1_2R = t1_2R
-        self.t1_1L = t1_1L
-        self.t1_1R = t1_1R
-        self.t1_3L = t1_3L
-        self.t1_3R = t1_3R
-        self.t1_4R = t1_4R
-        self.g1_1 = g1_1
-        self.g1_2 = g1_2
-        self.g2_1 = g2_1
-        self.g2_2 = g2_2
-        self.p1_1 = p1_1
-        self.p2_1 = p2_1
-        self.p1_2 = p1_2
-        self.p2_2 = p2_2
-        self.g1_4 = g1_4
-        self.diam = diam
-        self.len_left = len_left
-        self.len_right = len_right
-        self.str_left = str_left
-        self.str_right = str_right
-        self.massa = massa
-        self.sech = sech
-        self.modul = modul
-        self.tklr = tklr
-        self.temp = temp
-        self.vet = vet
-        self.gol = gol
-        self.land = land
-        
+# датакласс для результатов расчетов нагрузок на опору
+from dataclasses import dataclass
+
+
+@dataclass()
+class PillResultData:
+    wCab: float
+    wGolNorm: float
+    wGolol_1: float
+    wGolol_2: float
+    wTGol: float
+    wgol_1: float
+    wgol_2: float
+    klLeft: float
+    klRight: float
+    angkoef: float
+    wGN_L: float
+    wGN_R: float
+    wG1_L: float
+    wG2_L: float
+    wG1_R: float
+    wG2_R: float
+    wmax_1: float
+    wmaxR_1: float
+    cx: float
+    wLNormL: float
+    wLNormR: float
+    wL_1: float
+    wR_1: float
+    wL_2: float
+    wR_2: float
+    wvetR_1: float
+    wvet_1: float
+    wCabLeft: float
+    wCabRight: float
+    line_max1_left: tuple
+    line_max1_right: tuple
+    line_vet1_left: tuple
+    line_vet1_right: tuple
+    line_gol1_left: tuple
+    line_gol1_right: tuple
+    ki: float
+    kd: float
+    cg: float
+    kf: float
+    av: float
+    kw: float
+    vd: float
+    avg: float
+    t1_2L: float
+    t1_2R: float
+    t1_1L: float
+    t1_1R: float
+    t1_3L: float
+    t1_3R: float
+    t1_4R: float
+    g1_1: float
+    g1_2: float
+    g2_1: float
+    g2_2: float
+    p1_1: float
+    p2_1: float
+    p1_2: float
+    p2_2: float
+    g1_4: float
+    diam: float
+    len_left: float
+    len_right: float
+    str_left: float
+    str_right: float
+    massa: float
+    sech: float
+    modul: float
+    tklr: float
+    temp: float
+    vet: int
+    gol: int
+    land: int
+
     def getKeys(self):
 
         if self.land == 0:
@@ -154,7 +85,7 @@ class PillarResult:
             land_r = "B - с препятствиями ниже опор"
         if self.land == 3:
             land_r = "С - с препятствиями выше опор"
-        
+
         pill_key = {}
         pill_key_r = {}
 
@@ -342,3 +273,4 @@ class PillarResult:
         pill_key_r[90] = land_r
 
         return pill_key, pill_key_r
+

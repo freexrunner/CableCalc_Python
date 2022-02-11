@@ -1,8 +1,7 @@
 import math
 
 from LineResultData import LineResultData
-from PillarResult import PillarResult
-from LineResult import LineResult
+from PillResultData import PillResultData
 
 class Calculator:
     def __init__(self, massa, diam, sech, modul, tklr, mdrn, temp, height, land, vet, gol):
@@ -22,7 +21,7 @@ class Calculator:
         # self.ki   #ki - коэффициент изменения ощины стенки гололеда по высоте (2.5.4. ПУЭ)
         # self.kw   #kw - коэффициент изменения ветрового давления по высоте в зависимости от типа местности и высоты (табл. 2.5.2 ПУЭ)
         # self.kd   #kd - коэффициент зменения толщины стенки гололеда в зависимости от диаметра провода
-        # self.kf   #kf - коэффициент надежности по гололедной нагрузке (1.3 - 1 и 2 район, 1.6 - 3 и выше
+        # self.kf   #kf - коэффициент надежности по гололедной нагрузке (1.3 - 1 и 2 район, 1.6 - 3 и выше)
 
     def koef(self):
         if self.height <= 15.0:  # 15
@@ -121,7 +120,8 @@ class Calculator:
                     ycub = (-1) * ((math.fabs(Y)) ** (1.0 / 3))
                 sf[i] = xcub + ycub
             else:
-                sf[i] = 2 * (math.sqrt(-a / 3)) * (math.cos((1.0 / 3) * (math.acos((-b / 2) / ((-a / 3) ** (3.0 / 2.0))))))
+                sf[i] = 2 * (math.sqrt(-a / 3)) * (
+                    math.cos((1.0 / 3) * (math.acos((-b / 2) / ((-a / 3) ** (3.0 / 2.0))))))
             hf[i] = ((wCab * (lenth ** 2)) / (8 * sf[i])) / 1000
             if hf[i] > self.mdrn:
                 line_warning = True
@@ -136,9 +136,10 @@ class Calculator:
         # Расчет климатических нагрузок
         cg = [10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0]  # Толщина стенки гололеда
         vd = [400.0, 500.0, 650.0, 800.0, 1000.0, 1250.0, 1500.0]  # Ветровое давление
-        wGolnorm = (0.9e-3) * 9.8 * self.ki * self.kd * math.pi * (cg[self.gol - 1] * (self.diam + self.ki * self.kd * cg[self.gol - 1]))  #  нормативная гололедная нагрузка на 1 м кабеля
+        wGolnorm = (0.9e-3) * 9.8 * self.ki * self.kd * math.pi * (cg[self.gol - 1] * (
+                    self.diam + self.ki * self.kd * cg[self.gol - 1]))  # нормативная гололедная нагрузка на 1 м кабеля
         wGolol = wGolnorm * self.kf * 0.5  # расчетная голоедная нагрузка на 1 м кабеля
-        wGol = wCab + wGolol   # Вес кабеля, покрытого гололедом
+        wGol = wCab + wGolol  # Вес кабеля, покрытого гололедом
         av = [0.76, 0.71, 0.7, 0.7, 0.7, 0.7, 0.7]  # Коэффициент неравномерности ветрового давления
         avg = [1.0, 1.0, 1.0, 1.0, 0.9, 0.84, 0.72]
         skl = [0, 0, 0, 0]
@@ -167,7 +168,7 @@ class Calculator:
         # //расч. ветр. нагр. при гололеде
         wvgr = wwgp * 1.1
 
-        wvg = wvgr / lenth   # Ветровая нагрузка при гололеде 1 m
+        wvg = wvgr / lenth  # Ветровая нагрузка при гололеде 1 m
 
         wmax = math.sqrt(wGol ** 2 + wvg ** 2)  # Суммарная нагрузка гололед и ветер
 
@@ -176,7 +177,8 @@ class Calculator:
         else:
             cx = 1.2
 
-        wvnp = av[self.vet - 1] * kl * self.kw * cx * vd[self.vet - 1] * self.diam * 1e-3 * angkoef * lenth  # норм. ветр. нагрузка на кабель без гололеда
+        wvnp = av[self.vet - 1] * kl * self.kw * cx * vd[
+            self.vet - 1] * self.diam * 1e-3 * angkoef * lenth  # норм. ветр. нагрузка на кабель без гололеда
         wvr = wvnp * 1.1  # расч. ветр. нагрузка на кабель без гололеда
         wv = wvr / lenth  # расч. ветр. нагрузка на 1 m кабель без гололеда
         wvet = math.sqrt(wCab ** 2 + wv ** 2)  # Суммарная нагрузка, ветер без гололеда
@@ -216,178 +218,90 @@ class Calculator:
             hkl[k] = round(hkl[k], 2)
 
         lineResult = LineResultData(self.vet,
-                                self.gol,
-                                vd[self.vet - 1],
-                                cg[self.gol - 1],
-                                self.land,
-                                lenth,
-                                strela,
-                                "cable_name",
-                                self.massa,
-                                self.diam,
-                                self.sech,
-                                self.modul,
-                                self.tklr,
-                                skl[0],
-                                hkl[0],
-                                skl[1],
-                                hkl[1],
-                                skl[3],
-                                hkl[3],
-                                skl[2],
-                                hkl[2],
-                                sf[0],
-                                sf[1],
-                                sf[2],
-                                sf[3],
-                                sf[4],
-                                sf[5],
-                                sf[6],
-                                sf[7],
-                                sf[8],
-                                sf[9],
-                                sf[10],
-                                hf[0],
-                                hf[1],
-                                hf[2],
-                                hf[3],
-                                hf[4],
-                                hf[5],
-                                hf[6],
-                                hf[7],
-                                hf[8],
-                                hf[9],
-                                hf[10],
-                                round(wCab, 2),
-                                round(hnul, 2),
-                                round(lenCab, 2),
-                                round(lenNon, 2),
-                                self.temp,
-                                round(lnka[0], 2),
-                                round(aa[0], 2),
-                                round(bb[0], 2),
-                                round(disa[0], 2),
-                                round(lnka[1], 2),
-                                round(wGolnorm, 2),
-                                self.ki,
-                                self.kd,
-                                self.kf,
-                                round(wGolol, 2),
-                                round(wGol, 2),
-                                round(aa[1], 2),
-                                round(bb[1], 2),
-                                round(disa[1], 2),
-                                av[self.vet - 1],
-                                kl,
-                                self.kw,
-                                cx,
-                                round(wvnp, 2),
-                                round(wvr, 2),
-                                round(wv, 2),
-                                round(wvet, 2),
-                                round(aa[3], 2),
-                                round(bb[3], 2),
-                                round(disa[3], 2),
-                                avg[self.vet - 1],
-                                round(wwgp, 2),
-                                round(wvgr, 2),
-                                round(wvg, 2),
-                                round(wmax, 2),
-                                round(aa[2], 2),
-                                round(bb[2], 2),
-                                round(disa[2], 2),
-                                vg,
-                                line_warning)
+                                    self.gol,
+                                    vd[self.vet - 1],
+                                    cg[self.gol - 1],
+                                    self.land,
+                                    lenth,
+                                    strela,
+                                    "cable_name",
+                                    self.massa,
+                                    self.diam,
+                                    self.sech,
+                                    self.modul,
+                                    self.tklr,
+                                    skl[0],
+                                    hkl[0],
+                                    skl[1],
+                                    hkl[1],
+                                    skl[3],
+                                    hkl[3],
+                                    skl[2],
+                                    hkl[2],
+                                    sf[0],
+                                    sf[1],
+                                    sf[2],
+                                    sf[3],
+                                    sf[4],
+                                    sf[5],
+                                    sf[6],
+                                    sf[7],
+                                    sf[8],
+                                    sf[9],
+                                    sf[10],
+                                    hf[0],
+                                    hf[1],
+                                    hf[2],
+                                    hf[3],
+                                    hf[4],
+                                    hf[5],
+                                    hf[6],
+                                    hf[7],
+                                    hf[8],
+                                    hf[9],
+                                    hf[10],
+                                    round(wCab, 2),
+                                    round(hnul, 2),
+                                    round(lenCab, 2),
+                                    round(lenNon, 2),
+                                    self.temp,
+                                    round(lnka[0], 2),
+                                    round(aa[0], 2),
+                                    round(bb[0], 2),
+                                    round(disa[0], 2),
+                                    round(lnka[1], 2),
+                                    round(wGolnorm, 2),
+                                    self.ki,
+                                    self.kd,
+                                    self.kf,
+                                    round(wGolol, 2),
+                                    round(wGol, 2),
+                                    round(aa[1], 2),
+                                    round(bb[1], 2),
+                                    round(disa[1], 2),
+                                    av[self.vet - 1],
+                                    kl,
+                                    self.kw,
+                                    cx,
+                                    round(wvnp, 2),
+                                    round(wvr, 2),
+                                    round(wv, 2),
+                                    round(wvet, 2),
+                                    round(aa[3], 2),
+                                    round(bb[3], 2),
+                                    round(disa[3], 2),
+                                    avg[self.vet - 1],
+                                    round(wwgp, 2),
+                                    round(wvgr, 2),
+                                    round(wvg, 2),
+                                    round(wmax, 2),
+                                    round(aa[2], 2),
+                                    round(bb[2], 2),
+                                    round(disa[2], 2),
+                                    vg,
+                                    line_warning)
 
         return lineResult
-
-        # lineResult = LineResult(self.vet,
-        #                         self.gol,
-        #                         vd[self.vet - 1],
-        #                         cg[self.gol - 1],
-        #                         self.land,
-        #                         lenth,
-        #                         strela,
-        #                         "cable_name",
-        #                         self.massa,
-        #                         self.diam,
-        #                         self.sech,
-        #                         self.modul,
-        #                         self.tklr,
-        #                         skl[0],
-        #                         hkl[0],
-        #                         skl[1],
-        #                         hkl[1],
-        #                         skl[3],
-        #                         hkl[3],
-        #                         skl[2],
-        #                         hkl[2],
-        #                         sf[0],
-        #                         sf[1],
-        #                         sf[2],
-        #                         sf[3],
-        #                         sf[4],
-        #                         sf[5],
-        #                         sf[6],
-        #                         sf[7],
-        #                         sf[8],
-        #                         sf[9],
-        #                         sf[10],
-        #                         hf[0],
-        #                         hf[1],
-        #                         hf[2],
-        #                         hf[3],
-        #                         hf[4],
-        #                         hf[5],
-        #                         hf[6],
-        #                         hf[7],
-        #                         hf[8],
-        #                         hf[9],
-        #                         hf[10],
-        #                         round(wCab, 2),
-        #                         round(hnul, 2),
-        #                         round(lenCab, 2),
-        #                         round(lenNon, 2),
-        #                         self.temp,
-        #                         round(lnka[0], 2),
-        #                         round(aa[0], 2),
-        #                         round(bb[0], 2),
-        #                         round(disa[0], 2),
-        #                         round(lnka[1], 2),
-        #                         round(wGolnorm, 2),
-        #                         self.ki,
-        #                         self.kd,
-        #                         self.kf,
-        #                         round(wGolol, 2),
-        #                         round(wGol, 2),
-        #                         round(aa[1], 2),
-        #                         round(bb[1], 2),
-        #                         round(disa[1], 2),
-        #                         av[self.vet - 1],
-        #                         kl,
-        #                         self.kw,
-        #                         cx,
-        #                         round(wvnp, 2),
-        #                         round(wvr, 2),
-        #                         round(wv, 2),
-        #                         round(wvet, 2),
-        #                         round(aa[3], 2),
-        #                         round(bb[3], 2),
-        #                         round(disa[3], 2),
-        #                         avg[self.vet - 1],
-        #                         round(wwgp, 2),
-        #                         round(wvgr, 2),
-        #                         round(wvg, 2),
-        #                         round(wmax, 2),
-        #                         round(aa[2], 2),
-        #                         round(bb[2], 2),
-        #                         round(disa[2], 2),
-        #                         vg,
-        #                         line_warning)
-        #
-        # return lineResult
-
-        # return hf, sf, hkl, skl
 
     def pillarCalc(self, lenLeft, strLeft, lenRight, strRight, angle):
 
@@ -498,81 +412,81 @@ class Calculator:
         line_gol1_right = self.wireCalc(lenRight, strRight, -5.0, self.temp, self.modul, self.tklr, self.sech, wCab,
                                         wTGol)
 
-        # сохранение результатов в экземпляр класса
+        # сохранение результатов в экземпляр датакласса
 
-        pillresult = PillarResult(round(wCab, 2),
-                                  round(wGolnorm, 2),
-                                  round(wGolol_1, 2),
-                                  round(wGolol_2, 2),
-                                  round(wTGol, 2),
-                                  round(wGol_1, 2),
-                                  round(wGol_2, 2),
-                                  klLeft,
-                                  klRight,
-                                  angkoef,
-                                  round(wgn_L, 2),
-                                  round(wgn_r, 2),
-                                  round(wG1_L, 2),
-                                  round(wG2_L, 2),
-                                  round(wG1_R, 2),
-                                  round(wG2_R, 2),
-                                  round(wmax_1, 2),
-                                  round(wmaxR_1, 2),
-                                  cx,
-                                  round(wlnormL, 2),
-                                  round(wlnormR, 2),
-                                  round(wL_1, 2),
-                                  round(wR_1, 2),
-                                  round(wL_2, 2),
-                                  round(wR_2, 2),
-                                  round(wvetR_1, 2),
-                                  round(wvet_1, 2),
-                                  round(wCabLeft, 2),
-                                  round(wCabRight, 2),
-                                  line_max1_left,
-                                  line_max1_right,
-                                  line_vet1_left,
-                                  line_vet1_right,
-                                  line_gol1_left,
-                                  line_gol1_right,
-                                  self.ki,
-                                  self.kd,
-                                  cg[self.gol - 1],
-                                  self.kf,
-                                  av[self.vet - 1],
-                                  self.kw,
-                                  vd[self.vet - 1],
-                                  avg[self.vet - 1],
-                                  round((line_max1_left[1] * 1.3), 2),  # t1_2L
-                                  round((line_max1_right[1] * 1.3), 2),  # t1_2R
-                                  round((line_vet1_left[1] * 1.3), 2),  # t1_1L
-                                  round((line_vet1_right[1] * 1.3), 2),  # t1_1R
-                                  round((line_gol1_left[1] * 1.3), 2),  # t1_3L
-                                  round((line_gol1_right[1] * 1.3), 2),  # t1_3R
-                                  round((line_gol1_right[1] * 1.3), 2),  # t1_4R
-                                  round(((wCab * lenLeft + wCab * lenRight) / 2), 2),  # g1_1
-                                  round(((wGol_1 * lenLeft + wGol_1 * lenRight) / 2), 2),  # g1_2
-                                  round(((wCab * lenLeft + wCab * lenRight) / 2), 2),  # g2_1
-                                  round(((wGol_2 * lenLeft + wGol_2 * lenRight) / 2), 2),  # g2_2
-                                  round(((wL_1 + wR_1) / 2), 2),  # p1_1
-                                  round(((wL_2 + wR_2) / 2), 2),  # p2_1
-                                  round(((wG1_L + wG1_R) / 2), 2),  # p1_2
-                                  round(((wG2_L + wG2_R) / 2), 2),  # p2_2
-                                  round(((wGol_1 * lenRight) / 2), 2),  # g1_4
-                                  self.diam,
-                                  lenLeft,
-                                  lenRight,
-                                  strLeft,
-                                  strRight,
-                                  self.massa,
-                                  self.sech,
-                                  self.modul,
-                                  self.tklr,
-                                  self.temp,
-                                  self.vet,
-                                  self.gol,
-                                  self.land
-                                  )
+        pillresult = PillResultData(round(wCab, 2),
+                                    round(wGolnorm, 2),
+                                    round(wGolol_1, 2),
+                                    round(wGolol_2, 2),
+                                    round(wTGol, 2),
+                                    round(wGol_1, 2),
+                                    round(wGol_2, 2),
+                                    klLeft,
+                                    klRight,
+                                    angkoef,
+                                    round(wgn_L, 2),
+                                    round(wgn_r, 2),
+                                    round(wG1_L, 2),
+                                    round(wG2_L, 2),
+                                    round(wG1_R, 2),
+                                    round(wG2_R, 2),
+                                    round(wmax_1, 2),
+                                    round(wmaxR_1, 2),
+                                    cx,
+                                    round(wlnormL, 2),
+                                    round(wlnormR, 2),
+                                    round(wL_1, 2),
+                                    round(wR_1, 2),
+                                    round(wL_2, 2),
+                                    round(wR_2, 2),
+                                    round(wvetR_1, 2),
+                                    round(wvet_1, 2),
+                                    round(wCabLeft, 2),
+                                    round(wCabRight, 2),
+                                    line_max1_left,
+                                    line_max1_right,
+                                    line_vet1_left,
+                                    line_vet1_right,
+                                    line_gol1_left,
+                                    line_gol1_right,
+                                    self.ki,
+                                    self.kd,
+                                    cg[self.gol - 1],
+                                    self.kf,
+                                    av[self.vet - 1],
+                                    self.kw,
+                                    vd[self.vet - 1],
+                                    avg[self.vet - 1],
+                                    round((line_max1_left[1] * 1.3), 2),  # t1_2L
+                                    round((line_max1_right[1] * 1.3), 2),  # t1_2R
+                                    round((line_vet1_left[1] * 1.3), 2),  # t1_1L
+                                    round((line_vet1_right[1] * 1.3), 2),  # t1_1R
+                                    round((line_gol1_left[1] * 1.3), 2),  # t1_3L
+                                    round((line_gol1_right[1] * 1.3), 2),  # t1_3R
+                                    round((line_gol1_right[1] * 1.3), 2),  # t1_4R
+                                    round(((wCab * lenLeft + wCab * lenRight) / 2), 2),  # g1_1
+                                    round(((wGol_1 * lenLeft + wGol_1 * lenRight) / 2), 2),  # g1_2
+                                    round(((wCab * lenLeft + wCab * lenRight) / 2), 2),  # g2_1
+                                    round(((wGol_2 * lenLeft + wGol_2 * lenRight) / 2), 2),  # g2_2
+                                    round(((wL_1 + wR_1) / 2), 2),  # p1_1
+                                    round(((wL_2 + wR_2) / 2), 2),  # p2_1
+                                    round(((wG1_L + wG1_R) / 2), 2),  # p1_2
+                                    round(((wG2_L + wG2_R) / 2), 2),  # p2_2
+                                    round(((wGol_1 * lenRight) / 2), 2),  # g1_4
+                                    self.diam,
+                                    lenLeft,
+                                    lenRight,
+                                    strLeft,
+                                    strRight,
+                                    self.massa,
+                                    self.sech,
+                                    self.modul,
+                                    self.tklr,
+                                    self.temp,
+                                    self.vet,
+                                    self.gol,
+                                    self.land
+                                    )
 
         return pillresult
 
