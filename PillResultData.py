@@ -2,7 +2,7 @@
 from dataclasses import dataclass
 
 
-@dataclass()
+@dataclass
 class PillResultData:
     wCab: float
     wGolNorm: float
@@ -271,6 +271,24 @@ class PillResultData:
         pill_key_r[89] = str(self.gol)
         pill_key[90] = "#land"
         pill_key_r[90] = land_r
+        pill_key[91] = "#WTGol"
+        pill_key_r[91] = str(self.wTGol)
+        pill_key[92] = "#a3_left"
+        pill_key_r[92] = str(self.line_gol1_left[2])
+        pill_key[93] = "#a3_right"
+        pill_key_r[93] = str(self.line_gol1_right[2])
+        pill_key[94] = "#b3_left"
+        pill_key_r[94] = str(self.line_gol1_left[3])
+        pill_key[95] = "#b3_right"
+        pill_key_r[95] = str(self.line_gol1_right[3])
+        pill_key[96] = "#d3_left"
+        pill_key_r[96] = str(self.line_gol1_left[4])
+        pill_key[97] = "#d3_right"
+        pill_key_r[97] = str(self.line_gol1_right[4])
+        pill_key[98] = "#s3_left"
+        pill_key_r[98] = str(self.line_gol1_left[0])
+        pill_key[99] = "#s3_right"
+        pill_key_r[99] = str(self.line_gol1_right[0])
 
         return pill_key, pill_key_r
 
