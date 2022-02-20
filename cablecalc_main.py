@@ -349,9 +349,23 @@ class CableCalcMain(QtWidgets.QMainWindow):
         else:
             try:
                 inputfile = "pill_blank.txt"
+                #inputfile = "pill_blank_format1.txt"
                 outputfile = QFileDialog.getSaveFileName(self, 'Save file', 'Расчет нагрузок на опору', "TXT (*.txt)")[
                     0]
 
+
+                # форматтирование строк значениями в полях датакласса
+                # values = self.pillResult
+                #
+                # with open(inputfile, 'r') as infile, open(outputfile, 'w') as outfile:
+                #     for line in infile:
+                #         linerepl = line.format(val = values)
+                #         outfile.write(linerepl)
+
+
+
+
+                #старый вариант
                 keys = self.pillResult.getKeys()
 
                 key = keys[0]

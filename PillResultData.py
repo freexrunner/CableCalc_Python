@@ -75,7 +75,7 @@ class PillResultData:
     temp: float
     vet: int
     gol: int
-    land: int
+    land: str
 
     def getKeys(self):
 
@@ -270,7 +270,7 @@ class PillResultData:
         pill_key[89] = "#gol_area"
         pill_key_r[89] = str(self.gol)
         pill_key[90] = "#land"
-        pill_key_r[90] = land_r
+        pill_key_r[90] = self.land
         pill_key[91] = "#WTGol"
         pill_key_r[91] = str(self.wTGol)
         pill_key[92] = "#a3_left"

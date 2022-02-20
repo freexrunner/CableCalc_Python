@@ -500,7 +500,8 @@ class Calculator:
                                     self.temp,
                                     self.vet,
                                     self.gol,
-                                    self.land
+                                    self.land_str()
+                                    #self.land
                                     )
 
         return pillresult
