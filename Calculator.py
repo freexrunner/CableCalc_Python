@@ -18,12 +18,14 @@ class Calculator:
         self.vet = vet
         self.gol = gol
 
+
+
+    def koef(self):
         # self.ki   #ki - коэффициент изменения ощины стенки гололеда по высоте (2.5.4. ПУЭ)
         # self.kw   #kw - коэффициент изменения ветрового давления по высоте в зависимости от типа местности и высоты (табл. 2.5.2 ПУЭ)
         # self.kd   #kd - коэффициент зменения толщины стенки гололеда в зависимости от диаметра провода
         # self.kf   #kf - коэффициент надежности по гололедной нагрузке (1.3 - 1 и 2 район, 1.6 - 3 и выше)
 
-    def koef(self):
         if self.height <= 15.0:  # 15
             self.ki = 1.0
             hI = [1.0, 0.65, 0.4]
@@ -75,6 +77,16 @@ class Calculator:
             self.kf = 1.3
         if self.gol > 2:
             self.kf = 1.6
+
+    def land_str(self):
+
+        if self.land == 0:
+            land_r = "A - открытые пространства"
+        if self.land == 1:
+            land_r = "B - с препятствиями ниже опор"
+        if self.land == 3:
+            land_r = "С - с препятствиями выше опор"
+        return land_r
 
     def lineCalc(self, lenth, strela, angle):
 
@@ -217,11 +229,13 @@ class Calculator:
             skl[k] = round(skl[k], 2)
             hkl[k] = round(hkl[k], 2)
 
+
         lineResult = LineResultData(self.vet,
                                     self.gol,
                                     vd[self.vet - 1],
                                     cg[self.gol - 1],
-                                    self.land,
+                                    self.land_str(),
+                                    #self.land,
                                     lenth,
                                     strela,
                                     "cable_name",
@@ -229,7 +243,8 @@ class Calculator:
                                     self.diam,
                                     self.sech,
                                     self.modul,
-                                    self.tklr,
+                                    str(round(self.tklr * 1000000, 2)),
+                                    #self.tklr,
                                     skl[0],
                                     hkl[0],
                                     skl[1],

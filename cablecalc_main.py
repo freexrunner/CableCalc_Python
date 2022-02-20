@@ -11,6 +11,7 @@ import sys
 from cabui import *
 from Calculator import *
 from PyQt5.QtWidgets import QFileDialog
+from dataclasses import asdict
 
 class CableCalcMain(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
@@ -173,8 +174,8 @@ class CableCalcMain(QtWidgets.QMainWindow):
         self.ui.nagrGol.setText(str(self.lineResult.nagr_gol))
         self.ui.strVet.setText(str(self.lineResult.str_vet))
         self.ui.nagrVet.setText(str(self.lineResult.nagr_vet))
-        self.ui.strVetGol.setText(str(self.lineResult.str_vet_gol))
-        self.ui.nagrVetGol.setText(str(self.lineResult.nagr_vet_gol))
+        self.ui.strVetGol.setText(str(self.lineResult.strvetgol))
+        self.ui.nagrVetGol.setText(str(self.lineResult.nagrvetgol))
         self.ui.strmin30.setText(str(self.lineResult.str_min_30))
         self.ui.nagrmin30.setText(str(self.lineResult.nagr_min_30))
         self.ui.strmin20.setText(str(self.lineResult.str_min_20))
@@ -382,24 +383,37 @@ class CableCalcMain(QtWidgets.QMainWindow):
             msg_file.exec()
         else:
             try:
-                inputfile = "line_blank.txt"
+                inputfile = "line_blank_new.txt"
                 outputfile = QFileDialog.getSaveFileName(self, 'Save file', 'Расчет пролета', "TXT (*.txt)")[0]
 
-                keys = self.lineResult.getKeys()
+                results = asdict(self.lineResult)
 
-                key = keys[0]
-                key_r = keys[1]
+                key = list(results.keys())
+                values = list(results.values())
 
-                infile = open(inputfile, mode='r', encoding='utf-8')
-                outfile = open(outputfile, mode='w', encoding='utf-8')
+                with open(inputfile, 'r') as infile, open(outputfile, 'w') as outfile:
+                    for line in infile:
+                        for f in range(len(key)):
+                            if key[f] in line:
+                                line = line.replace(key[f], str(values[f]))
+                        outfile.write(line)
 
-                for line in infile:
-                    for f in range(len(key)):
-                        if key[f] in line:
-                            line = line.replace(key[f], key_r[f])
-                    outfile.write(line)
-                infile.close()
-                outfile.close()
+                # старый вариант
+                # keys = self.lineResult.getKeys()
+                #
+                # key = keys[0]
+                # key_r = keys[1]
+                #
+                # infile = open(inputfile, mode='r', encoding='utf-8')
+                # outfile = open(outputfile, mode='w', encoding='utf-8')
+                #
+                # for line in infile:
+                #     for f in range(len(key)):
+                #         if key[f] in line:
+                #             line = line.replace(key[f], key_r[f])
+                #     outfile.write(line)
+                # infile.close()
+                # outfile.close()
             except:
                 msg_ls = QtWidgets.QMessageBox()
                 msg_ls.setWindowTitle('Сохранение результатов расчета в файл')

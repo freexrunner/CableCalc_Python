@@ -15,15 +15,15 @@ class LineResultData:
     diam: float
     sech: float
     modul: float
-    tklr: float
+    tklr: str
     str_norm: float
     nagr_norm: float
     str_gol: float
     nagr_gol: float
     str_vet: float
     nagr_vet: float
-    str_vet_gol: float
-    nagr_vet_gol: float
+    strvetgol: float
+    nagrvetgol: float
     str_min_30: float
     str_min_20: float
     str_min_10: float
@@ -48,14 +48,14 @@ class LineResultData:
     nagr_70: float
     cab_weight: float
     start_h: float
-    fact_length: float
-    start_length: float
+    factlen: float
+    startlen: float
     temp: float
-    temp_length: float
+    t_len: float
     a_norm: float
     b_norm: float
     d_norm: float
-    calc_length: float
+    calclen: float
     gol_norm: float
     ki: float
     kd: float
@@ -70,20 +70,20 @@ class LineResultData:
     kw: float
     cx: float
     vet_norm: float
-    vet_r: float
+    vetr: float
     vet_metr: float
-    w_vet_r: float
+    wvet_r: float
     a_vet: float
     b_vet: float
     d_vet: float
     agol: float
-    vet_gol_norm: float
+    vetgolnorm: float
     vet_gol_r: float
     vet_gol_metr: float
     w_vet_gol: float
-    a_vet_gol: float
-    b_vet_gol: float
-    d_vet_gol: float
+    a_v_gol: float
+    b_v_gol: float
+    d_v_gol: float
     vg: float
     line_warning: bool
 
