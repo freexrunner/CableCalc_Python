@@ -354,7 +354,8 @@ class CableCalcMain(QtWidgets.QMainWindow):
                     0]
 
 
-                # форматтирование строк значениями в полях датакласса
+                # форматирование строк значениями полей датакласса
+
                 # values = self.pillResult
                 #
                 # with open(inputfile, 'r') as infile, open(outputfile, 'w') as outfile:
@@ -362,10 +363,7 @@ class CableCalcMain(QtWidgets.QMainWindow):
                 #         linerepl = line.format(val = values)
                 #         outfile.write(linerepl)
 
-
-
-
-                #старый вариант
+                # старый вариант
                 keys = self.pillResult.getKeys()
 
                 key = keys[0]
