@@ -232,6 +232,68 @@ class CableCalcMain(QtWidgets.QMainWindow):
 
     def updatePillarUI(self):
 
+        # self.ui.T1_2_left.setText(str(self.pillResult.t1_2L))
+        # self.ui.T1_2_right.setText(str(self.pillResult.t1_2R))
+        # self.ui.a2_left.setText(str(self.pillResult.a2_left))
+        # self.ui.b2_left.setText(str(self.pillResult.b2_left))
+        # self.ui.d2_left.setText(str(self.pillResult.d2_left))
+        # self.ui.a2_right.setText(str(self.pillResult.a2_right))
+        # self.ui.b2_right.setText(str(self.pillResult.b2_right))
+        # self.ui.d2_right.setText(str(self.pillResult.d2_right))
+        # self.ui.t2_left.setText(str(self.pillResult.t2_left))
+        # self.ui.s2_left.setText(str(self.pillResult.s2_left))
+        # self.ui.t2_right.setText(str(self.pillResult.t2_right))
+        # self.ui.s2_right.setText(str(self.pillResult.s2_right))
+        #
+        # self.ui.startH_left.setText(str(self.pillResult.startH_left))
+        # self.ui.startH_right.setText(str(self.pillResult.startH_right))
+        # self.ui.fact_length_left.setText(str(self.pillResult.fact_length_left))
+        # self.ui.fact_length_right.setText(str(self.pillResult.fact_length_right))
+        # self.ui.start_length_left.setText(str(self.pillResult.start_length_left))
+        # self.ui.start_length_right.setText(str(self.pillResult.start_length_right))
+        # self.ui.temp_length_left.setText(str(self.pillResult.Tem_length_left))
+        # self.ui.temp_length_right.setText(str(self.pillResult.Tem_length_right))
+        #
+        # self.ui.T1_1_left.setText(str(self.pillResult.t1_1L))
+        # self.ui.T1_1_right.setText(str(self.pillResult.t1_1R))
+        # self.ui.a1_left.setText(str(self.pillResult.a1_left))
+        # self.ui.b1_left.setText(str(self.pillResult.b1_left))
+        # self.ui.d1_left.setText(str(self.pillResult.d1_left))
+        # self.ui.a1_right.setText(str(self.pillResult.a1_right))
+        # self.ui.b1_right.setText(str(self.pillResult.b1_right))
+        # self.ui.d1_right.setText(str(self.pillResult.d1_right))
+        # self.ui.t1_left.setText(str(self.pillResult.t1_left))
+        # self.ui.s1_left.setText(str(self.pillResult.s1_left))
+        # self.ui.t1_right.setText(str(self.pillResult.t1_right))
+        # self.ui.s1_right.setText(str(self.pillResult.s1_right))
+        #
+        # self.ui.T1_4_left.setText('Обрыв')
+        # self.ui.P1_4.setText('0')
+        #
+        # self.ui.T1_3_left.setText(str(self.pillResult.t1_3L))
+        # self.ui.T1_3_right.setText(str(self.pillResult.t1_3R))
+        # self.ui.T1_4_right.setText(str(self.pillResult.t1_4R))
+        # self.ui.a3_left.setText(str(self.pillResult.a3_left))
+        # self.ui.b3_left.setText(str(self.pillResult.b3_left))
+        # self.ui.d3_left.setText(str(self.pillResult.d3_left))
+        # self.ui.a3_right.setText(str(self.pillResult.a3_right))
+        # self.ui.b3_right.setText(str(self.pillResult.b3_right))
+        # self.ui.d3_right.setText(str(self.pillResult.d3_right))
+        #
+        # self.ui.t3_left.setText(str(self.pillResult.t3_left))
+        # self.ui.s3_left.setText(str(self.pillResult.s3_left))
+        # self.ui.t3_right.setText(str(self.pillResult.t3_right))
+        # self.ui.s3_right.setText(str(self.pillResult.s3_right))
+        #
+        # self.ui.T2_1_left.setText(str(self.pillResult.t1_left))
+        # self.ui.T2_1_right.setText(str(self.pillResult.t1_right))
+        #
+        # self.ui.T2_2_left.setText(str(self.pillResult.t2_left))
+        # self.ui.T2_2_right.setText(str(self.pillResult.t2_right))
+        #
+        # self.ui.T2_3_left.setText(str(self.pillResult.t3_left))
+        # self.ui.T2_3_right.setText(str(self.pillResult.t3_right))
+######################################################################################################
         self.ui.T1_2_left.setText(str(self.pillResult.t1_2L))
         self.ui.T1_2_right.setText(str(self.pillResult.t1_2R))
         self.ui.a2_left.setText(str(self.pillResult.line_max1_left[2]))
@@ -294,6 +356,8 @@ class CableCalcMain(QtWidgets.QMainWindow):
         self.ui.T2_3_left.setText(str(self.pillResult.line_gol1_left[1]))
         self.ui.T2_3_right.setText(str(self.pillResult.line_gol1_right[1]))
 
+####################################################################
+
         self.ui.G1_1.setText(str(self.pillResult.g1_1))
         self.ui.G1_2.setText(str(self.pillResult.g1_2))
         self.ui.G2_1.setText(str(self.pillResult.g2_1))
@@ -349,9 +413,24 @@ class CableCalcMain(QtWidgets.QMainWindow):
         else:
             try:
                 inputfile = "pill_blank.txt"
-                #inputfile = "pill_blank_format1.txt"
+                # inputfile = "pill_blank_format1.txt"
+                # inputfile = "pill_blank_new.txt"
                 outputfile = QFileDialog.getSaveFileName(self, 'Save file', 'Расчет нагрузок на опору', "TXT (*.txt)")[
                     0]
+
+                # форматирование строк ключами и значениями из словаря
+
+                # results = asdict(self.pillResult)
+                #
+                # key = list(results.keys())
+                # values = list(results.values())
+                #
+                # with open(inputfile, 'r') as infile, open(outputfile, 'w') as outfile:
+                #     for line in infile:
+                #         for f in range(len(key)):
+                #             if key[f] in line:
+                #                 line = line.replace(key[f], str(values[f]))
+                #         outfile.write(line)
 
 
                 # форматирование строк значениями полей датакласса
@@ -362,6 +441,8 @@ class CableCalcMain(QtWidgets.QMainWindow):
                 #     for line in infile:
                 #         linerepl = line.format(val = values)
                 #         outfile.write(linerepl)
+
+
 
                 # старый вариант
                 keys = self.pillResult.getKeys()
