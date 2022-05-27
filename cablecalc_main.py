@@ -29,7 +29,7 @@ class CableCalcMain(QtWidgets.QMainWindow):
             self.land_r = "A - открытые пространства"
         if land == 1:
             self.land_r = "B - с препятствиями ниже опор"
-        if land == 3:
+        if land == 2:
             self.land_r = "С - с препятствиями выше опор"
 
         self.ui.sechCalcBtn.clicked.connect(self.onSech)

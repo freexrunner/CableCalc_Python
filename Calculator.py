@@ -83,7 +83,7 @@ class Calculator:
             land_r = "A - открытые пространства"
         if self.land == 1:
             land_r = "B - с препятствиями ниже опор"
-        if self.land == 3:
+        if self.land == 2:
             land_r = "С - с препятствиями выше опор"
         return land_r
 
