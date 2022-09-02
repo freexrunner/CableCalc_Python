@@ -1,4 +1,5 @@
 # датакласс для результатов расчетов пролета
+#
 from dataclasses import dataclass
 
 @dataclass

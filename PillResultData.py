@@ -1,4 +1,5 @@
 # датакласс для результатов расчетов нагрузок на опору
+#
 from dataclasses import dataclass
 
 # @dataclass
