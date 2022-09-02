@@ -3,7 +3,6 @@ import math
 from LineResultData import LineResultData
 from PillResultData import PillResultData
 
-
 class Calculator:
     def __init__(self, massa, diam, sech, modul, tklr, mdrn, temp, height, land, vet, gol):
         # self.lenLeftPole = None
@@ -19,13 +18,12 @@ class Calculator:
         self.vet = vet
         self.gol = gol
 
-    def koef(self):
         # self.ki   #ki - коэффициент изменения ощины стенки гололеда по высоте (2.5.4. ПУЭ)
         # self.kw   #kw - коэффициент изменения ветрового давления по высоте в зависимости от типа местности и высоты (табл. 2.5.2 ПУЭ)
         # self.kd   #kd - коэффициент зменения толщины стенки гололеда в зависимости от диаметра провода
         # self.kf   #kf - коэффициент надежности по гололедной нагрузке (1.3 - 1 и 2 район, 1.6 - 3 и выше)
-        #
 
+    def koef(self):
         if self.height <= 15.0:  # 15
             self.ki = 1.0
             hI = [1.0, 0.65, 0.4]
@@ -77,16 +75,6 @@ class Calculator:
             self.kf = 1.3
         if self.gol > 2:
             self.kf = 1.6
-
-    def land_str(self):
-
-        if self.land == 0:
-            land_r = "A - открытые пространства"
-        if self.land == 1:
-            land_r = "B - с препятствиями ниже опор"
-        if self.land == 2:
-            land_r = "С - с препятствиями выше опор"
-        return land_r
 
     def lineCalc(self, lenth, strela, angle):
 
@@ -149,7 +137,7 @@ class Calculator:
         cg = [10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0]  # Толщина стенки гололеда
         vd = [400.0, 500.0, 650.0, 800.0, 1000.0, 1250.0, 1500.0]  # Ветровое давление
         wGolnorm = (0.9e-3) * 9.8 * self.ki * self.kd * math.pi * (cg[self.gol - 1] * (
-                self.diam + self.ki * self.kd * cg[self.gol - 1]))  # нормативная гололедная нагрузка на 1 м кабеля
+                    self.diam + self.ki * self.kd * cg[self.gol - 1]))  # нормативная гололедная нагрузка на 1 м кабеля
         wGolol = wGolnorm * self.kf * 0.5  # расчетная голоедная нагрузка на 1 м кабеля
         wGol = wCab + wGolol  # Вес кабеля, покрытого гололедом
         av = [0.76, 0.71, 0.7, 0.7, 0.7, 0.7, 0.7]  # Коэффициент неравномерности ветрового давления
@@ -233,8 +221,7 @@ class Calculator:
                                     self.gol,
                                     vd[self.vet - 1],
                                     cg[self.gol - 1],
-                                    self.land_str(),
-                                    # self.land,
+                                    self.land,
                                     lenth,
                                     strela,
                                     "cable_name",
@@ -242,8 +229,7 @@ class Calculator:
                                     self.diam,
                                     self.sech,
                                     self.modul,
-                                    str(round(self.tklr * 1000000, 2)),
-                                    # self.tklr,
+                                    self.tklr,
                                     skl[0],
                                     hkl[0],
                                     skl[1],
@@ -428,113 +414,6 @@ class Calculator:
 
         # сохранение результатов в экземпляр датакласса
 
-        # pillresult = PillResultData(round(wCab, 2),
-        #                             round(wGolnorm, 2),
-        #                             round(wGolol_1, 2),
-        #                             round(wGolol_2, 2),
-        #                             round(wTGol, 2),
-        #                             round(wGol_1, 2),
-        #                             round(wGol_2, 2),
-        #                             klLeft,
-        #                             klRight,
-        #                             angkoef,
-        #                             round(wgn_L, 2),
-        #                             round(wgn_r, 2),
-        #                             round(wG1_L, 2),
-        #                             round(wG2_L, 2),
-        #                             round(wG1_R, 2),
-        #                             round(wG2_R, 2),
-        #                             round(wmax_1, 2),
-        #                             round(wmaxR_1, 2),
-        #                             cx,
-        #                             round(wlnormL, 2),
-        #                             round(wlnormR, 2),
-        #                             round(wL_1, 2),
-        #                             round(wR_1, 2),
-        #                             round(wL_2, 2),
-        #                             round(wR_2, 2),
-        #                             round(wvetR_1, 2),
-        #                             round(wvet_1, 2),
-        #                             round(wCabLeft, 2),
-        #                             round(wCabRight, 2),
-        #                             line_max1_left[0],  # s2_left
-        #                             line_max1_left[1],  # t2_left
-        #                             line_max1_left[2],  # a2_left
-        #                             line_max1_left[3],  # b2_left
-        #                             line_max1_left[4],  # d2_left
-        #                             line_max1_left[5],  # startH_left
-        #                             line_max1_left[6],  # fact_length_left
-        #                             line_max1_left[7],  # start_length_left
-        #                             line_max1_left[8],  # Tem_length_left
-        #                             line_max1_right[0],  # s2_right
-        #                             line_max1_right[1],  # t2_right
-        #                             line_max1_right[2],  # a2_right
-        #                             line_max1_right[3],  # b2_right
-        #                             line_max1_right[4],  # d2_right
-        #                             line_max1_right[5],  # startH_right
-        #                             line_max1_right[6],  # fact_length_right
-        #                             line_max1_right[7],  # start_length_right
-        #                             line_max1_right[8],  # Tem_length_right
-        #                             line_vet1_left[0],  # s1_left
-        #                             line_vet1_left[1],  # t1_left
-        #                             line_vet1_left[2],  # a1_left
-        #                             line_vet1_left[3],  # b1_left
-        #                             line_vet1_left[4],  # d1_left
-        #                             line_vet1_right[0],  # s1_right
-        #                             line_vet1_right[1],  # t1_right
-        #                             line_vet1_right[2],  # a1_right
-        #                             line_vet1_right[3],  # b1_right
-        #                             line_vet1_right[4],  # d1_right
-        #                             line_gol1_left[0],  # s3_left
-        #                             line_gol1_left[1],  # t3_left
-        #                             line_gol1_left[2],  # a3_left
-        #                             line_gol1_left[3],  # b3_left
-        #                             line_gol1_left[4],  # d3_left
-        #                             line_gol1_right[0],  # s3_right
-        #                             line_gol1_right[1],  # t3_right
-        #                             line_gol1_right[2],  # a3_right
-        #                             line_gol1_right[3],  # b3_right
-        #                             line_gol1_right[4],  # d3_right
-        #                             self.ki,
-        #                             self.kd,
-        #                             cg[self.gol - 1],
-        #                             self.kf,
-        #                             av[self.vet - 1],
-        #                             self.kw,
-        #                             vd[self.vet - 1],
-        #                             avg[self.vet - 1],
-        #                             round((line_max1_left[1] * 1.3), 2),  # t1_2L
-        #                             round((line_max1_right[1] * 1.3), 2),  # t1_2R
-        #                             round((line_vet1_left[1] * 1.3), 2),  # t1_1L
-        #                             round((line_vet1_right[1] * 1.3), 2),  # t1_1R
-        #                             round((line_gol1_left[1] * 1.3), 2),  # t1_3L
-        #                             round((line_gol1_right[1] * 1.3), 2),  # t1_3R
-        #                             round((line_gol1_right[1] * 1.3), 2),  # t1_4R
-        #                             round(((wCab * lenLeft + wCab * lenRight) / 2), 2),  # g1_1
-        #                             round(((wGol_1 * lenLeft + wGol_1 * lenRight) / 2), 2),  # g1_2
-        #                             round(((wCab * lenLeft + wCab * lenRight) / 2), 2),  # g2_1
-        #                             round(((wGol_2 * lenLeft + wGol_2 * lenRight) / 2), 2),  # g2_2
-        #                             round(((wL_1 + wR_1) / 2), 2),  # p1_1
-        #                             round(((wL_2 + wR_2) / 2), 2),  # p2_1
-        #                             round(((wG1_L + wG1_R) / 2), 2),  # p1_2
-        #                             round(((wG2_L + wG2_R) / 2), 2),  # p2_2
-        #                             round(((wGol_1 * lenRight) / 2), 2),  # g1_4
-        #                             self.diam,
-        #                             lenLeft,
-        #                             lenRight,
-        #                             strLeft,
-        #                             strRight,
-        #                             self.massa,
-        #                             self.sech,
-        #                             self.modul,
-        #                             self.tklr,
-        #                             self.temp,
-        #                             self.vet,
-        #                             self.gol,
-        #                             self.land_str()
-        #                             )
-        # return pillresult
-        #
         pillresult = PillResultData(round(wCab, 2),
                                     round(wGolnorm, 2),
                                     round(wGolol_1, 2),
@@ -606,8 +485,7 @@ class Calculator:
                                     self.temp,
                                     self.vet,
                                     self.gol,
-                                    self.land_str()
-                                    #self.land
+                                    self.land
                                     )
 
         return pillresult
